@@ -27,12 +27,12 @@ qt_add_qml_module(appProjet
         QML_FILES OptionsScreen.qml
         QML_FILES AboutScreen.qml
         QML_FILES GameOverScreen.qml
-        QML_FILES Colors.qml
-        QML_FILES Fonts.qml
+        QML_FILES
+        QML_FILES
         QML_FILES Theme.qml
-        QML_FILES TileAppearAnimation.qml
-        QML_FILES TileMergeAnimation.qml
-        QML_FILES TileMoveAnimation.qml
+        QML_FILES
+        QML_FILES
+        QML_FILES
         RESOURCES qml.qrc
 )
 

@@ -11,7 +11,8 @@ Item {
     Loader {
         id: screenLoader
         anchors.fill: parent
-        source: getScreenSource()
+        // source: getScreenSource()  // Commentez cette ligne
+        source: "MainMenu.qml"  // Prévisualisez directement un écran
     }
 
     // Fonction pour déterminer quel écran charger

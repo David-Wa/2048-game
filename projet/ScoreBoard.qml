@@ -68,6 +68,12 @@ Row {
         }
     }
 
+    Main {
+        id: main
+        x: -6
+        y: 345
+    }
+
     // Mettre à jour le score actuel
     function updateScore(points) {
         currentScore += points;

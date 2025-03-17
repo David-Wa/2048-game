@@ -70,7 +70,7 @@ Item {
 
     // Information de copyright
     Text {
-        text: "© 2025 Votre Nom"
+        text: "© 2025 TBER Anas et WAGNER David"
         font.family: "Helvetica"
         font.pixelSize: 12
         color: "#BBADA0"
