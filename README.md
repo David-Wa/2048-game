@@ -40,12 +40,7 @@ Le but est d'obtenir une tesselle avec la valeur **2048** (ou plus) avant que la
    cd 2048-game
    ```
 2. Ouvrir le projet dans **Qt Creator**.
-3. Compiler et exécuter depuis l'IDE ou utiliser `qmake` et `make` en ligne de commande :
-   ```bash
-   qmake
-   make
-   ./2048-game
-   ```
+3. Compiler et exécuter depuis l'IDE 
 
 ## Auteurs et crédits
 Projet réalisé dans le cadre de l'électif C++ "Programmation des interfaces graphiques en C++"
