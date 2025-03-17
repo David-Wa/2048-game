@@ -1,8 +1,16 @@
 import QtQuick
+import QtQuick.Window
 
 Window {
-    width: 640
-    height: 480
+    id: mainWindow
+    width: 480
+    height: 640
     visible: true
-    title: qsTr("Hello World")
+    title: "2048"
+    color: "#FAF8EF"  // Couleur de fond similaire au jeu 2048 original
+
+    // Point d'entrée de l'application, charge la fenêtre principale du jeu
+    GameWindow {
+        anchors.fill: parent
+    }
 }
