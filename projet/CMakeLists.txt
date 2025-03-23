@@ -34,6 +34,7 @@ qt_add_qml_module(appProjet
         QML_FILES
         QML_FILES
         RESOURCES qml.qrc
+        QML_FILES Tile.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
