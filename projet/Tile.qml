@@ -1,77 +1,43 @@
 import QtQuick
 
+
 Rectangle {
     id: tile
+    width: 80
+    height: 80
+    radius: 5
 
-    // Propriété pour la valeur de la tuile (2, 4, 8, etc.)
-    property int value: 2
+    property int value: 0
 
-    // Rayon des coins arrondis
-    radius: 3
+    // Couleur et texte basés sur la valeur
+    color: getBackgroundColor(value)
 
-    // Obtenir la couleur de fond en fonction de la valeur
-    color: {
-        switch(value) {
-            case 2: return "#EEE4DA";
-            case 4: return "#EDE0C8";
-            case 8: return "#F2B179";
-            case 16: return "#F59563";
-            case 32: return "#F67C5F";
-            case 64: return "#F65E3B";
-            case 128: return "#EDCF72";
-            case 256: return "#EDCC61";
-            case 512: return "#EDC850";
-            case 1024: return "#EDC53F";
-            case 2048: return "#EDC22E";
-            default: return "#CDC1B4";
-        }
-    }
-
-    // Label pour afficher la valeur
     Text {
         anchors.centerIn: parent
-        text: tile.value
-        font.family: "Helvetica"
-        font.pixelSize: {
-            if (tile.value < 100) return tile.width * 0.5;
-            else if (tile.value < 1000) return tile.width * 0.4;
-            else return tile.width * 0.3;
-        }
+        text: value !== 0 ? value : ""
+        font.family: "Arial"
+        font.pixelSize: value < 1000 ? 36 : 24
         font.bold: true
-        color: tile.value <= 4 ? "#776E65" : "#F9F6F2"
+        color: value <= 4 ? "#776e65" : "white"
     }
 
-    // Animation d'apparition
-    Component.onCompleted: {
-        scaleAnim.start();
-    }
 
-    // Animation d'échelle pour l'apparition
-    SequentialAnimation {
-        id: scaleAnim
-
-        // Commencer petit
-        PropertyAction {
-            target: tile
-            property: "scale"
-            value: 0.1
-        }
-
-        // Grossir jusqu'à taille normale avec un petit rebond
-        NumberAnimation {
-            target: tile
-            property: "scale"
-            to: 1.1
-            duration: 100
-            easing.type: Easing.OutQuad
-        }
-
-        NumberAnimation {
-            target: tile
-            property: "scale"
-            to: 1.0
-            duration: 50
-            easing.type: Easing.InQuad
+    // Fonction pour déterminer la couleur de fond en fonction de la valeur
+    function getBackgroundColor(val) {
+        switch(val) {
+            case 0: return "#cdc1b4"; // Cellule vide
+            case 2: return "#eee4da";
+            case 4: return "#ede0c8";
+            case 8: return "#f2b179";
+            case 16: return "#f59563";
+            case 32: return "#f67c5f";
+            case 64: return "#f65e3b";
+            case 128: return "#edcf72";
+            case 256: return "#edcc61";
+            case 512: return "#edc850";
+            case 1024: return "#edc53f";
+            case 2048: return "#edc22e";
+            default: return "#3c3a32"; // Pour les valeurs supérieures
         }
     }
 }
