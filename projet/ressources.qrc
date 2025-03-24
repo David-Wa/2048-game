@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>MenuButton.qml</file>
+        <file>InterfaceMenu.qml</file>
+    </qresource>
+</RCC>
