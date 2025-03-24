@@ -17,23 +17,30 @@ qt_add_qml_module(appProjet
     VERSION 1.0
     QML_FILES
         Main.qml
-        QML_FILES GameWindow.qml
-        QML_FILES Tile.qml
-        QML_FILES GameBoard.qml
-        QML_FILES ScoreBoard.qml
-        QML_FILES GameButton.qml
-        QML_FILES MainMenu.qml
-        QML_FILES GameScreen.qml
-        QML_FILES OptionsScreen.qml
-        QML_FILES AboutScreen.qml
-        QML_FILES GameOverScreen.qml
-        QML_FILES Colors.qml
-        QML_FILES Fonts.qml
-        QML_FILES Theme.qml
-        QML_FILES TileAppearAnimation.qml
-        QML_FILES TileMergeAnimation.qml
-        QML_FILES TileMoveAnimation.qml
+        QML_FILES
+        QML_FILES Cell.qml
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
+        QML_FILES
         RESOURCES qml.qrc
+        QML_FILES Tile.qml
+        SOURCES gamecontroller.h
+        SOURCES gamecontroller.cpp
+        SOURCES game.h game.cpp
+        SOURCES boardmodel.h boardmodel.cpp
+        SOURCES tile.h tile.cpp
+        SOURCES board.h board.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
