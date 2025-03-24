@@ -20,7 +20,6 @@ qt_add_qml_module(appProjet
         QML_FILES MenuButton.qml
         QML_FILES InterfaceMenu.qml
         SOURCES menubutton.h menubutton.cpp
-        SOURCES menubutton.h menubutton.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

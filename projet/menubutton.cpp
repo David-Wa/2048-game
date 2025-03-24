@@ -1,14 +1,10 @@
 #include "menubutton.h"
 
-MenuButton::MenuButton(QString a) {
-    fbutton=a;
+Bouton::Bouton() {
+    QString fBouton="bouton";
 
 }
 
-
-QString MenuButton::readMenuButton() {
-    emit InterfaceChanged();
-    return fbutton;
+void Bouton::clicked() {
+    emit openMenu();
 }
-
-

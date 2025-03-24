@@ -1,73 +1,63 @@
 import QtQuick
 
 Window {
-    color: "#ecaf49"
-
-    Column {
-        id: column
-        width: 104
-        height: 177
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        MenuButton {
-            id: couleur
-            buttonText: qsTr("Couleur")
-
-            // Exemple de connexion à un signal
-            onButtonClicked: {
-                console.log("Le bouton a été cliqué depuis QML")
-            }
-        }
-
-        MenuButton {
-            id: taille
-            buttonText: qsTr("Taille")
-        }
-
-        MenuButton {
-            id: police
-            buttonText: qsTr("Police")
-        }
-
-    }
-
-
-
-    // Utilisation de MenuButton dans l'interface
-       MenuButton {
-           id: myButton
-           buttonText: "Cliquez-moi"
-
-           // Exemple de connexion à un signal
-           onButtonClicked: {
-               console.log("Le bouton a été cliqué depuis QML")
-           }
-       }
-
-       // Bouton visuel avec un MouseArea
-       Button {
-           text: vueObjetBouton.buttonText  // Utilisation de la propriété vueObjetBouton passée du C++
-           anchors.centerIn: parent
-           onClicked: vueObjetBouton.triggerAction() // Appel de la méthode C++ depuis QML
-       }
+    x: 0
+    width: 320
+    height: 240
+    opacity: 1
+    visible: true
+    color: "#b24dbe"
+    title: qsTr("Hello World")
 
     Rectangle {
         id: rectangle
-        x: 44
-        y: 16
-        width: 553
-        height: 90
-        color: "#ffffff"
+        x: 110
+        y: 95
+        width: 100
+        height: 50
+        visible: true
+        color: "#00ffa5"
 
-        Text {
-            id: _text
-            text: qsTr("Menu")
-            anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 45
-            anchors.horizontalCenter: parent.horizontalCenter
+
+    MenuButton { id: color
+        buttonText: "hello"
+        // Connexion au signal 'openMenu' pour ouvrir une nouvelle fenêtre
+        Connections {
+            target: vueObjetBtn
+            onOpenMenu: {
+                menuWindow.visible = true;  // Ouvre la fenêtre du menu en la rendant visible
+                            }
         }
-    }
 
+    }}
+
+    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+        Window {
+            id: menuWindow
+            width: 300
+            height: 200
+            title: "Menu"
+            visible: false  // Initialement, la fenêtre est invisible
+
+            Rectangle {
+                width: parent.width
+                height: parent.height
+                color: "#f0f0f0"
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "Voici votre menu"
+                    font.pixelSize: 20
+                    font.family: "Tahoma"
+                }
+            }
+
+            // Fermer le menu lorsqu'on clique sur la fenêtre
+            MouseArea {
+                anchors.fill: parent
+                onClicked: menuWindow.close()
+            }
+        }
 
 }
+

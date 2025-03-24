@@ -16,38 +16,49 @@ Item {
         radius: 10
         anchors.fill: parent
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
+        // Text affichant la propriété btnQML du C++ (vueObjetBtn)
+              Text {
+                  id: _text
+                  anchors.centerIn: parent
+                  text: "bouton"
+                  font.pixelSize: 20
+                  font.family: "Tahoma"
 
-            // Changement de couleur au survol
-            onPressed: {
-                rectangle.color = clickedColor
+                  MouseArea {
+                      anchors.fill: parent
+                      onClicked: {
+                          vueObjetBtn.openMenu();  // Appel de la méthode C++ pour émettre openMenu
+                      }
+                  }
+}}
+
+
+    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+        Window {
+            id: menuWindow
+            width: 300
+            height: 200
+            title: "Menu"
+
+            Rectangle {
+                width: parent.width
+                height: parent.height
+                color: "#f0f0f0"
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "Voici votre menu"
+                    font.pixelSize: 20
+                    font.family: "Tahoma"
+                }
             }
 
-            onReleased: {
-                rectangle.color = hoverColor
-                console.log("Button clicked!")
-            }
-
-            onClicked: {
-                // Action à effectuer lors du clic (par exemple, changer le texte)
-                buttonText = "Cliqué!"
-            }
-
-            onMouseAreaClicked: {
-                // Change le texte lorsque le bouton est cliqué
-                buttonText = "Action Réalisée"
+            // Fermer le menu lorsqu'on clique sur la fenêtre
+            MouseArea {
+                anchors.fill: parent
+                onClicked: menuWindow.close()
             }
         }
 
-        Text {
-            id: _text
-            anchors.centerIn: parent
-            text: qsTr("Bouton")
-            font.pixelSize: 20
-            color: "#000000"
-        }
     }
-}
+

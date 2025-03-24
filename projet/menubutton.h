@@ -3,20 +3,16 @@
 
 #include <QObject>
 
-
-
-class MenuButton: public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString buttonQML READ readMenuButton NOTIFY InterfaceChanged)
+class Bouton : public QObject
+{Q_OBJECT
+    Q_PROPERTY (NOTIFY openMenu)
 public:
-    MenuButton(QString a="Bouton");
+    Bouton();
 private:
-    QString fbutton;
-    QString readMenuButton();
+    QString fBouton;
+    Q_INVOKABLE void clicked();
 signals:
-    void InterfaceChanged();
+    void openMenu();
 };
 
 #endif // MENUBUTTON_H
-
