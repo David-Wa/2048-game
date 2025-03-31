@@ -15,24 +15,30 @@ qt_add_executable(appProjet
 qt_add_qml_module(appProjet
     URI Projet
     VERSION 1.0
-    QML_FILES main.qml
-        RESOURCES ressources.qrc
-        QML_FILES MenuButton.qml
-        QML_FILES InterfaceMenu.qml
-        SOURCES menubutton.h menubutton.cpp
-        SOURCES direction.h
-        SOURCES board.cpp
-        SOURCES tile.cpp
-        SOURCES boardmodel.cpp
-        SOURCES game.cpp
-        SOURCES gamecontroller.cpp
-        SOURCES board.h
-        SOURCES boardmodel.h
-        SOURCES game.h
-        SOURCES gamecontroller.h
-        SOURCES tile.h
-        QML_FILES Tile.qml
-        QML_FILES Cell.qml
+    QML_FILES
+        main.qml
+        MenuButton.qml
+        InterfaceMenu.qml
+        Tile.qml
+        Cell.qml
+    RESOURCES
+        ressources.qrc
+        couleurs.jpg
+    SOURCES
+        menubutton.h
+        menubutton.cpp
+        direction.h
+        board.cpp
+        tile.cpp
+        boardmodel.cpp
+        game.cpp
+        gamecontroller.cpp
+        board.h
+        boardmodel.h
+        game.h
+        gamecontroller.h
+        tile.h
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
