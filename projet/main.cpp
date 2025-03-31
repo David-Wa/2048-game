@@ -1,37 +1,20 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-<<<<<<< Updated upstream
-#include "menubutton.h"
-
-=======
 #include <QDir>
 #include <QFileInfo>
 #include <QCoreApplication>
 #include "gamecontroller.h"
 #include "menubutton.h"
->>>>>>> Stashed changes
 
-    int main(int argc, char *argv[])
+
+int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-<<<<<<< Updated upstream
     Bouton aButton ;
-=======
-      Bouton aButton ;
->>>>>>> Stashed changes
+    // Créer l'objet QQmlApplicationEngine
     QQmlApplicationEngine engine;
-    QObject::connect(
-        &engine,
-        &QQmlApplicationEngine::objectCreationFailed,
-        &app,
-        []() { QCoreApplication::exit(-1); },
-        Qt::QueuedConnection);
-    engine.rootContext()->setContextProperty("vueObjetBtn", &aButton);
-    engine.loadFromModule("Projet", "InterfaceMenu");
 
-<<<<<<< Updated upstream
-=======
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
@@ -50,9 +33,7 @@
         return -1;
     }
 
->>>>>>> Stashed changes
     return app.exec();
 }
-
 
 

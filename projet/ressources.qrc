@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>MenuButton.qml</file>
+        <file>main.qml</file>
+        <file>Cell.qml</file>
+        <file>Tile.qml</file>
         <file>InterfaceMenu.qml</file>
-        <file>Menu_color.qml</file>
+        <file>MenuButton.qml</file>
     </qresource>
 </RCC>
