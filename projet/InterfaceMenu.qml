@@ -4,10 +4,10 @@ import QtQuick.Window
 
 
 Window {
-    id: mainWindow
+    id: menuWindow
     width: 480
     height: 640
-    visible: true
+    visible: false
     title: "Settings"
     color: "#FAF8EF"
 
