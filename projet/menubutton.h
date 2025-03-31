@@ -6,13 +6,18 @@
 class Bouton : public QObject
 {Q_OBJECT
     Q_PROPERTY (NOTIFY openMenu)
+    Q_PROPERTY(QString  buttonName READ  getName WRITE setName NOTIFY nameChanged)
 public:
-    Bouton();
+   Bouton();
+    void setName(const QString &a);
+   QString getName();
+
 private:
-    QString fBouton;
     Q_INVOKABLE void clicked();
+    QString buttonName="bouton";
 signals:
-    void openMenu();
+    void nameChanged();
+     void openMenu();
 };
 
 #endif // MENUBUTTON_H
