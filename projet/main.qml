@@ -12,13 +12,14 @@ Window {
     title: "2048"
     color: maincolor
 
+
     // Dimensions de la grille et des tuiles
     property int cellSize: 80
     property int cellSpacing: 10
     property int gridMargin: 10
     // Déclaration de la variable dans l'objet Window
     property string maincolor: "#FAF8EF"
-
+    property string mainfont: "Sergoe UI"
 
     Item {
         id: keyboardFocus
@@ -69,6 +70,7 @@ Window {
         Text {
             id: gameTitle
             text: "2048"
+            font.family:mainfont
             font.pixelSize: 40
             font.bold: true
             color: "#776e65"
@@ -81,6 +83,7 @@ Window {
         Button{
             id:openMenu
             text: "="
+            font.family:mainfont
             width: 40
             height: 40
             anchors.top: header.top
@@ -92,6 +95,7 @@ Window {
         Button {
             id: newGameButton
             text: "Nouvelle partie"
+            font.family:mainfont
             width: 120
             height: 40
             anchors.top: gameTitle.bottom
@@ -106,7 +110,7 @@ Window {
 
             contentItem: Text {
                 text: newGameButton.text
-                font: newGameButton.font
+                font: mainfont
                 color: "white"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -133,7 +137,7 @@ Window {
             Text {
                 id: scoreLabel
                 text: "SCORE"
-                font.family: "Arial"
+                font.family: mainfont
                 font.pixelSize: 13
                 font.bold: true
                 color: "#eee4da"
@@ -145,7 +149,7 @@ Window {
             Text {
                 id: scoreValue
                 text: gameController.getScore()
-                font.family: "Arial"
+                font.family: mainfont
                 font.pixelSize: 25
                 font.bold: true
                 color: "white"
@@ -168,7 +172,7 @@ Window {
             Text {
                 id: bestScoreLabel
                 text: "MEILLEUR"
-                font.family: "Arial"
+                font.family: mainfont
                 font.pixelSize: 13
                 font.bold: true
                 color: "#eee4da"
@@ -180,7 +184,7 @@ Window {
             Text {
                 id: bestScoreValue
                 text: gameController.getBestScore()
-                font.family: "Arial"
+                font.family: mainfont
                 font.pixelSize: 25
                 font.bold: true
                 color: "white"
@@ -293,6 +297,7 @@ Window {
 
         Text {
             text: "Partie terminée! Votre score: " + gameController.getScore()
+            font.family:mainfont
         }
     }
 
@@ -310,6 +315,7 @@ Window {
 
         Text {
             text: "Félicitations! Vous avez atteint 2048!"
+            font.family:mainfont
         }
     }
 
@@ -324,7 +330,7 @@ Window {
         Text {
             id: instructions
             text: "Utilisez les flèches pour déplacer les tuiles. Les tuiles de même valeur fusionnent lorsqu'elles se touchent. Obtenez 2048 pour gagner!"
-            font.family: "Arial"
+            font.family: mainfont
             font.pixelSize: 16
             color: "white"
             wrapMode: Text.WordWrap
@@ -368,6 +374,7 @@ Rectangle {
         Text {
             id: menuTitle
             text: "2048-Paramètres"
+            font.family:mainfont
             font.pixelSize: 40
             font.bold: true
             color: "#776e65"
@@ -379,14 +386,28 @@ Rectangle {
     }
 
 
-    Button{
-        text:"X"
-        anchors.top:parent.top;
-        anchors.right:parent.right;
-    onClicked: {
-        menuWindow.visible = false;
-        keyboardFocus.forceActiveFocus();  // Réactive le focus sur le jeu
-    }
+    // Bouton de fermeture
+    Button {
+        text: "X"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 10
+        background: Rectangle {
+            color: "#ff6666"
+            radius: 10
+        }
+        contentItem: Text {
+            text: "X"
+            font.pixelSize: 18
+            color: "white"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: {
+            menuWindow.visible = false;
+            keyboardFocus.forceActiveFocus();  // Réactive le focus sur le jeu
+        }
     }
 
     Column {
@@ -469,52 +490,118 @@ Rectangle {
 
     // La fenêtre qui sera ouverte lorsque le bouton est cliqué
 
-    Rectangle {
-        id: colorWindow
-        width: parent.width
-        height: parent.height
-        color: "#f0f0f0"
-        visible: false  // Initialement, la fenêtre est invisible
+
+Rectangle {
+    id: colorWindow
+    width: parent.width
+    height: parent.height
+    color: maincolor
+    visible: false  // La fenêtre est affichée au démarrage
+
+    Column {
+        anchors.centerIn: parent
+        spacing: 20
+
+        // Titre du menu
+        // Titre du menu avec un cadre blanc
+             Rectangle {
+                 width: 300
+                 height: 50
+                 color: "white"
+                 radius: 10
+                 border.color: "#cccccc"
+                 border.width: 2
+                 anchors.horizontalCenter: parent.horizontalCenter
+
+                 Text {
+                     text: "Personnalisation du Jeu"
+                     font.family:mainfont
+                     font.pixelSize: 20
+                     font.bold: true
+                     color: "#333"
+                     anchors.centerIn: parent
+                 }
+             }
+        // Indication pour le joueur
+
+             Rectangle {
+                 width: 300
+                 height: 50
+                 color: "white"
+                 radius: 10
+                 anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: "Voici votre menu"
-            font.pixelSize: 20
-            font.family: "Tahoma"
-        }
+            text: "Cliquez sur l'image pour choisir la couleur du jeu!"
+            font.family:mainfont
+            font.pixelSize: 16
+            color: "#666"
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width * 0.8
+            anchors.horizontalCenter: parent.horizontalCenter
+        }}
 
-        Button {
-            text: "X"
-            anchors.top: parent.top
-            anchors.right: parent.right
-            onClicked: {colorWindow.visible = false;
-                menuWindow.visible=true;}
-        }
-
-        // Image affichée
+        // Image cliquable
         Image {
             id: myImage
-            x: 0
-            y: 0
             width: 300
             height: 160
-            source: "couleurs.jpg"  // Utilisation de l'image depuis les ressources
+            source: "couleurs.jpg"  // Image des couleurs
             fillMode: Image.PreserveAspectFit
+            anchors.horizontalCenter: parent.horizontalCenter
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    var x = mouse.x;
-                    var y = mouse.y;
+                onClicked: (mouse) => {
+                    var x = Math.floor(mouse.x * myImage.sourceSize.width / myImage.width);
+                    var y = Math.floor(mouse.y * myImage.sourceSize.height / myImage.height);
 
-                    // Récupérer la couleur du pixel en appelant la méthode C++ directement
-                    var color = colorPicker.getPixelColor(x, y)//, "couleurs.jpg");
-                    console.log("Couleur du pixel : " + color);
-                    maincolor=color
+
+                    // Récupération de la couleur via C++
+                    var color = colorPicker.getPixelColor(x, y);
+                    console.log("Couleur du pixel sélectionnée : " + color);
+                    console.log(x+' et '+y);
+                    maincolor = color;
                 }
             }
+        }
+    }
+    // Footnote - Source de l'image
+               Text {
+                   text: "Source de l'image : Unsplash / Pexels"
+                   font.pixelSize: 12
+                   color: "#999"
+                   horizontalAlignment: Text.AlignHCenter
+                   anchors.horizontalCenter: parent.horizontalCenter
+               }
 
+
+    // Bouton de fermeture
+    Button {
+        text: "X"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 10
+        background: Rectangle {
+            color: "#ff6666"
+            radius: 10
+        }
+        contentItem: Text {
+            text: "X"
+            font.pixelSize: 18
+            color: "white"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: {
+            colorWindow.visible = false;
+            menuWindow.visible = true;
+        }
+    }
 }
-}
+
 
 
 
@@ -525,28 +612,66 @@ Rectangle {
 
         Rectangle {
             id: heightWindow
-            width: parent.width * 0.8
-                   height: parent.height * 0.5
-                   color: "#E0E0E0"
-                   border.color: "black"
-                   border.width: 2
-                   radius: 10
+            anchors.fill: parent
             visible: false  // Initialement, la fenêtre est invisible
 
-            Text {
-                text: "Voici votre menu"
-                font.pixelSize: 20
-                font.family: "Tahoma"
+            Column {
+                width: 200
+                height: 400
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+
+
+                Button {
+                    text:"4"
+                    font.family:mainfont
+                    anchors.top: parent.top
+                 anchors.horizontalCenter: parent.horizontalCenter
+
+                }
+
+                Button {
+                    text:"5"
+                    font.family:mainfont
+                    anchors.verticalCenter: parent.verticalCenter
+                 anchors.horizontalCenter: parent.horizontalCenter
+
+                }
+
+            Button {
+                text:"6"
+                font.family:mainfont
+                anchors.bottom: parent.bottom
+             anchors.horizontalCenter: parent.horizontalCenter
+
             }
 
+}
 
-        Button{
-            text:"X"
-            anchors.top:parent.top;
-            anchors.right:parent.right;
-        onClicked: {heightWindow.visible = false;
-            menuWindow.visible=true;}
-        }
+            // Bouton de fermeture
+            Button {
+                text: "X"
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.margins: 10
+                background: Rectangle {
+                    color: "#ff6666"
+                    radius: 10
+                }
+                contentItem: Text {
+                    text: "X"
+                    font.pixelSize: 18
+                    color: "white"
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+                onClicked: {
+                   heightWindow.visible = false;
+                    menuWindow.visible = true;
+                }
+            }
+
 }
 
 
@@ -554,53 +679,70 @@ Rectangle {
 // La fenêtre qui sera ouverte lorsque le bouton est cliqué
 
 
+
         Rectangle {
-               visible: false  // Initialement, la fenêtre est invisible
-             id: policeWindow
+            id: policeWindow
             width: parent.width
             height: parent.height
-            color: "#f0f0f0"
+            color: maincolor
+            border.color: "#cccccc"
+            border.width: 1
+            visible: false  // Initialement, la fenêtre est invisible
 
+            // Titre
             Text {
                 text: "Choisissez la police du jeu"
-                font.pixelSize: 20
-                font.family: "Tahoma"
+                font.pixelSize: 24
+                font.family: mainfont
+                color: "#333333"
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.topMargin: 30
             }
 
+            // ComboBox pour choisir la police
+            ComboBox {
+                id: fontComboBox
+                width: parent.width * 0.6
+                anchors.top: parent.top
+                anchors.topMargin: 100
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 18
 
+                // Liste de polices disponibles
+                model: [
+                    "Arial", "Courier", "Times New Roman", "Verdana", "Comic Sans MS"
+                ]
 
-        ComboBox {
-              id: comboBox
-              width: 150
-              model: ["Segoe UI", "Arial", "Courier","Tahoma","Times New Roman","Verdana"]
-            currentIndex: 0  // La valeur initiale est "Segoe UI" (index 0)
-             // Définition du delegate pour personnaliser chaque élément
-                    delegate: Item {
-                        width: 200
-                        height: 40
+                // Fonction pour appliquer la police choisie
+                onActivated: {
+                    mainfont = fontComboBox.currentText
+                }
+            }
 
-                        // Le texte de chaque option
-                        Text {
-                            text: modelData
-                            font.pixelSize: 20
-                            font.family: modelData
-                            anchors.centerIn: parent
-                        }
-                    }
-
-              onActivated: console.log("Sélectionné:",comboBox.currentText)
-          }
-        Button{
-            text:"X"
-            anchors.top:parent.top;
-            anchors.right:parent.right;
-        onClicked: {policeWindow.visible = false;
-            menuWindow.visible=true;}
+            // Bouton de fermeture
+            Button {
+                text: "X"
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.margins: 10
+                background: Rectangle {
+                    color: "#ff6666"
+                    radius: 10
+                }
+                contentItem: Text {
+                    text: "X"
+                    font.pixelSize: 18
+                    color: "white"
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+                onClicked: {
+                    policeWindow.visible = false;
+                    menuWindow.visible = true;
+                }
+            }
         }
-}
-
-
-
-
 
 }
