@@ -1,31 +1,27 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
+
 #include <QObject>
-#include <QString>
+#include "direction.h"
 
-// Définition des constantes et types
-const int SIZE = 4; // Taille du plateau
-enum Direction { UP, RIGHT, DOWN, LEFT };
-
-
+// Déclarations anticipées
 class Game;
 class BoardModel;
-class Board;
-class Tile;
 
-
-class GameController: public QObject{
+class GameController : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString cptQML READ readCompteur NOTIFY cptChanged)
+    Q_PROPERTY(BoardModel* boardModel READ boardModel NOTIFY boardModelChanged)
+    Q_PROPERTY(int score READ getScore NOTIFY scoreChanged)
+    Q_PROPERTY(int bestScore READ getBestScore NOTIFY bestScoreChanged)
+    Q_PROPERTY(bool gameOver READ isGameOver NOTIFY gameOverChanged)
+    Q_PROPERTY(bool gameWon READ isGameWon NOTIFY gameWonChanged)
 
 public:
     explicit GameController(QObject* parent = nullptr);
     ~GameController();
 
-    // Accesseurs pour les propriétés Qt
-    BoardModel* boardModel() const { return m_boardModel; }
-
-
+    // Accesseur pour les propriétés Qt
+    BoardModel* boardModel() const;
 
     // Méthodes invocables depuis QML
     Q_INVOKABLE void newGame();
@@ -37,19 +33,16 @@ public:
     Q_INVOKABLE void saveGame();
     Q_INVOKABLE void loadGame();
 
-
-
 signals:
     void boardModelChanged();
     void scoreChanged();
+    void bestScoreChanged();
     void gameOverChanged();
     void gameWonChanged();
 
-
 private:
-Game* m_game;
-BoardModel* m_boardModel;
-
+    Game* m_game;
+    BoardModel* m_boardModel;
 };
 
 #endif // GAMECONTROLLER_H

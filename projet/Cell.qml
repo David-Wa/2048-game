@@ -1,8 +1,9 @@
-import QtQuick
+import QtQuick 2.15
 
 Rectangle {
-    width: 97
-    height: 97
+    // Les dimensions seront définies par le parent (main.qml)
+    width: 80
+    height: 80
     radius: 5
     color: "#cdc1b4"
 }

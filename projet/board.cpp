@@ -1,11 +1,9 @@
 #include "board.h"
-#include "tile.h"
-#include <cstdlib>
-#include <ctime>
 #include <QRandomGenerator>
 
-Board::Board()
-    : m_size(SIZE)
+Board::Board(QObject* parent)
+    : QObject(parent)
+    , m_size(SIZE)
     , m_changed(false)
 {
     initialize();
@@ -125,10 +123,12 @@ void Board::moveUp()
                         row--;
                     } else if (target->getValue() == current->getValue() && !target->isMerged()) {
                         // Fusionner avec la case de même valeur
-                        target->setValue(target->getValue() * 2);
+                        int mergeValue = target->getValue() * 2;
+                        target->setValue(mergeValue);
                         target->setMerged(true);
                         current->setValue(0);
                         m_changed = true;
+                        emit tileMerged(mergeValue);
                         break;
                     } else {
                         break;
@@ -155,10 +155,12 @@ void Board::moveRight()
                         m_changed = true;
                         col++;
                     } else if (target->getValue() == current->getValue() && !target->isMerged()) {
-                        target->setValue(target->getValue() * 2);
+                        int mergeValue = target->getValue() * 2;
+                        target->setValue(mergeValue);
                         target->setMerged(true);
                         current->setValue(0);
                         m_changed = true;
+                        emit tileMerged(mergeValue);
                         break;
                     } else {
                         break;
@@ -185,10 +187,12 @@ void Board::moveDown()
                         m_changed = true;
                         row++;
                     } else if (target->getValue() == current->getValue() && !target->isMerged()) {
-                        target->setValue(target->getValue() * 2);
+                        int mergeValue = target->getValue() * 2;
+                        target->setValue(mergeValue);
                         target->setMerged(true);
                         current->setValue(0);
                         m_changed = true;
+                        emit tileMerged(mergeValue);
                         break;
                     } else {
                         break;
@@ -215,10 +219,12 @@ void Board::moveLeft()
                         m_changed = true;
                         col--;
                     } else if (target->getValue() == current->getValue() && !target->isMerged()) {
-                        target->setValue(target->getValue() * 2);
+                        int mergeValue = target->getValue() * 2;
+                        target->setValue(mergeValue);
                         target->setMerged(true);
                         current->setValue(0);
                         m_changed = true;
+                        emit tileMerged(mergeValue);
                         break;
                     } else {
                         break;

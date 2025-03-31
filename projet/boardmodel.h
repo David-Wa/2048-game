@@ -1,51 +1,46 @@
 #ifndef BOARDMODEL_H
 #define BOARDMODEL_H
 
-
 #include <QObject>
 #include <QList>
+#include <QAbstractListModel>
+#include "direction.h"
 
-
-class Tile;
+// Déclarations anticipées
 class Board;
+class Tile;
 
-
-const int SIZE = 4;
-enum Direction { UP, RIGHT, DOWN, LEFT };
-
-
-
-
-class BoardModel : public QObject{
+class BoardModel : public QAbstractListModel {
     Q_OBJECT
 
-
 public:
-
-    //Constructeur et destructeur
+    // Définir les rôles pour QML
+    enum TileRoles {
+        ValueRole = Qt::UserRole + 1,
+        RowRole,
+        ColRole
+    };
 
     explicit BoardModel(QObject* parent = nullptr, Board* board = nullptr);
     ~BoardModel();
 
+    // Méthodes requises par QAbstractListModel
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QHash<int, QByteArray> roleNames() const override;
 
-    //Méthodes principales
     void initialize();
-    void addRandomTile();
-    bool canMove();
-    bool moveTiles(Direction direction);
-    bool isFull();
-    bool contains2048();
-    Tile* getTileAt(int row, int col);
-    QList<Tile*> getEmptyTiles();
-
     void refresh();
 
+    // Méthode accessible depuis QML
+    Q_INVOKABLE int getTileValue(int row, int col) const;
+    Q_INVOKABLE Tile* getTileAt(int row, int col) const;
+
 private:
+    Board* m_board;
     Tile* m_grid[SIZE][SIZE];
     int m_size;
     bool m_changed;
-    Board* m_board;
 };
-
 
 #endif // BOARDMODEL_H
