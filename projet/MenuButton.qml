@@ -27,38 +27,11 @@ Item {
                   MouseArea {
                       anchors.fill: parent
                       onClicked: {
+                          vueObjetBtn.buttonName=buttonText
                           vueObjetBtn.openMenu();  // Appel de la méthode C++ pour émettre openMenu
                       }
                   }
 }}
+}
 
-
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-        Window {
-            id: menuWindow
-            width: 300
-            height: 200
-            title: "Menu"
-
-            Rectangle {
-                width: parent.width
-                height: parent.height
-                color: "#f0f0f0"
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Voici votre menu"
-                    font.pixelSize: 20
-                    font.family: "Tahoma"
-                }
-            }
-
-            // Fermer le menu lorsqu'on clique sur la fenêtre
-            MouseArea {
-                anchors.fill: parent
-                onClicked: menuWindow.close()
-            }
-        }
-
-    }
 
