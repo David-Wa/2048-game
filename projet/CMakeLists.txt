@@ -18,7 +18,6 @@ qt_add_qml_module(appProjet
     QML_FILES
         main.qml
         MenuButton.qml
-        InterfaceMenu.qml
         Tile.qml
         Cell.qml
     RESOURCES
@@ -26,6 +25,8 @@ qt_add_qml_module(appProjet
         couleurs.jpg
     SOURCES
         menubutton.h
+        colorpicker.cpp
+        colorpicker.h
         menubutton.cpp
         direction.h
         board.cpp
@@ -38,6 +39,8 @@ qt_add_qml_module(appProjet
         game.h
         gamecontroller.h
         tile.h
+        SOURCES colorpicker.h colorpicker.cpp
+        RESOURCES couleurs.jpg
 
 )
 

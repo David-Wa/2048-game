@@ -2,18 +2,23 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
+
 Window {
+
     id: mainWindow
     width: 480
     height: 640
     visible: true
     title: "2048"
-    color: "#FAF8EF"
+    color: maincolor
 
     // Dimensions de la grille et des tuiles
     property int cellSize: 80
     property int cellSpacing: 10
     property int gridMargin: 10
+    // Déclaration de la variable dans l'objet Window
+    property string maincolor: "#FAF8EF"
+
 
     Item {
         id: keyboardFocus
@@ -57,7 +62,7 @@ Window {
         x: 0
         width: parent.width
         height: 100
-        color: "#FAF8EF"
+        color: maincolor
         anchors.top: parent.top
         anchors.topMargin: 9
 
@@ -349,14 +354,14 @@ Rectangle {
     width: 480
     height: 640
     visible: false
-    color: "#FAF8EF"
+    color: maincolor
 
     Rectangle {
         id: menuheader
         x: 0
         width: parent.width
         height: 100
-        color: "#FAF8EF"
+        color: maincolor
         anchors.top: parent.top
         anchors.topMargin: 9
 
@@ -406,6 +411,7 @@ Rectangle {
                 target: vueObjetBtn
                 onOpenMenu: {if (vueObjetBtn.buttonName==="Couleur"){
                     colorWindow.visible = true;  // Ouvre la fenêtre du menu en la rendant visible
+                        menuWindow.visible=false;
               }
             }}
 
@@ -420,7 +426,8 @@ Rectangle {
                 Connections {
                     target: vueObjetBtn
                     onOpenMenu: {if (vueObjetBtn.buttonName==="Taille"){
-                        heightWindow.visible = true;  // Ouvre la fenêtre du menu en la rendant visible
+                        heightWindow.visible = true;
+                            menuWindow.visible=false;// Ouvre la fenêtre du menu en la rendant visible
                                     }}
                 }}
 
@@ -436,7 +443,8 @@ Rectangle {
                     Connections {
                         target: vueObjetBtn
                         onOpenMenu: {if (vueObjetBtn.buttonName==="Police"){
-                            policeWindow.visible = true;  // Ouvre la fenêtre du menu en la rendant visible
+                            policeWindow.visible = true;
+                                menuWindow.visible=false;// Ouvre la fenêtre du menu en la rendant visible
                                         }}
                     }}
 
@@ -446,80 +454,68 @@ Rectangle {
 
 
 
-
-
-
-
-
-
-
-
-
-
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-
-        Rectangle {
-            id: colorWindow
-            width: parent.width
-            height: parent.height
-            color: "#f0f0f0"
-            visible: false  // Initialement, la fenêtre est invisible
-
-            Text {
-                text: "Voici votre menu"
-                font.pixelSize: 20
-                font.family: "Tahoma"
-            }
-
-            Button{
-                text:"X"
-                anchors.top:parent.top;
-                anchors.right:parent.right;
-            onClicked: colorWindow.visible = false;
-            }
-            Image {
-                    id: myImage
-                    x: 0
-                    y: 0
-                    source: "couleurs.jpg"  // Remplace par ton image
-                    width: 300
-                    height: 160
-                    fillMode: Image.PreserveAspectFit
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            var xCoord = mouseX
-                            var yCoord = mouseY
-                            colorCanvas.getPixelColor(xCoord, yCoord)
-                        }
-                    }
-                }
-
-                // Canvas pour récupérer la couleur du pixel
-                Canvas {
-                    id: colorCanvas
-                    width: myImage.width
-                    height: myImage.height
-                    anchors.centerIn: parent
-
-                    onPaint: {
-                        var context = getContext("2d")
-                        context.drawImage(myImage, 0, 0)
-                    }
-
-                    // Fonction pour obtenir la couleur du pixel
-                    function getPixelColor(x, y) {
-                        var context = getContext("2d")
-                        var pixelData = context.getImageData(x, y, 1, 1).data
-                        var color = "rgba(" + pixelData[0] + ", " + pixelData[1] + ", " + pixelData[2] + ", " + (pixelData[3] / 255) + ")"
-                        console.log("Couleur du pixel (" + x + ", " + y + "): " + color)
-                    }
-                }
 }
+
+
+
+
+
+
+
+
+
+    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+
+    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+
+    Rectangle {
+        id: colorWindow
+        width: parent.width
+        height: parent.height
+        color: "#f0f0f0"
+        visible: false  // Initialement, la fenêtre est invisible
+
+        Text {
+            text: "Voici votre menu"
+            font.pixelSize: 20
+            font.family: "Tahoma"
+        }
+
+        Button {
+            text: "X"
+            anchors.top: parent.top
+            anchors.right: parent.right
+            onClicked: {colorWindow.visible = false;
+                menuWindow.visible=true;}
+        }
+
+        // Image affichée
+        Image {
+            id: myImage
+            x: 0
+            y: 0
+            width: 300
+            height: 160
+            source: "couleurs.jpg"  // Utilisation de l'image depuis les ressources
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var x = mouse.x;
+                    var y = mouse.y;
+
+                    // Récupérer la couleur du pixel en appelant la méthode C++ directement
+                    var color = colorPicker.getPixelColor(x, y)//, "couleurs.jpg");
+                    console.log("Couleur du pixel : " + color);
+                    maincolor=color
+                }
+            }
+
+}
+}
+
 
 
 
@@ -548,7 +544,8 @@ Rectangle {
             text:"X"
             anchors.top:parent.top;
             anchors.right:parent.right;
-        onClicked: heightWindow.visible = false;
+        onClicked: {heightWindow.visible = false;
+            menuWindow.visible=true;}
         }
 }
 
@@ -597,12 +594,13 @@ Rectangle {
             text:"X"
             anchors.top:parent.top;
             anchors.right:parent.right;
-        onClicked: policeWindow.visible = false;
+        onClicked: {policeWindow.visible = false;
+            menuWindow.visible=true;}
         }
 }
 
 
-}
+
 
 
 }

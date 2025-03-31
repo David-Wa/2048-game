@@ -6,12 +6,16 @@
 #include <QCoreApplication>
 #include "gamecontroller.h"
 #include "menubutton.h"
-
+#include "colorpicker.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     Bouton aButton ;
+    // Créer une instance de ColorPicker
+    ColorPicker colorPicker;
+
+
     // Créer l'objet QQmlApplicationEngine
     QQmlApplicationEngine engine;
 
@@ -22,6 +26,8 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.rootContext()->setContextProperty("vueObjetBtn", &aButton);
+    // Enregistrer l'objet pour l'utiliser dans QML
+    engine.rootContext()->setContextProperty("colorPicker", &colorPicker);
 
     GameController* controller = new GameController();
     engine.rootContext()->setContextProperty("gameController", controller);

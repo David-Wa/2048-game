@@ -3,7 +3,7 @@
         <file>main.qml</file>
         <file>Cell.qml</file>
         <file>Tile.qml</file>
-        <file>InterfaceMenu.qml</file>
+        <file>couleurs.jpg</file>
         <file>MenuButton.qml</file>
     </qresource>
 </RCC>

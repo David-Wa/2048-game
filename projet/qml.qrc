@@ -3,5 +3,7 @@
         <file>Main.qml</file>
         <file>Tile.qml</file>
         <file>Cell.qml</file>
+        <file>/couleurs.jpg</file>
+
     </qresource>
 </RCC>
