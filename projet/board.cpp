@@ -44,6 +44,15 @@ void Board::initialize(int size)
     m_changed = false;
 }
 
+void Board::delRandomTile()
+{ int i,j; //temporaire
+    // Nettoyer les tuiles
+        undo.pop_random();
+        m_grid.get(i,j)->setValue(0);
+        }
+
+
+
 void Board::addRandomTile()
 {
     QList<Tile*> emptyTiles = getEmptyTiles();
@@ -53,7 +62,7 @@ void Board::addRandomTile()
     // Choisir une tuile vide aléatoire
     int index = QRandomGenerator::global()->bounded(emptyTiles.size());
     Tile* tile = emptyTiles[index];
-
+    undo.store_random(tile->getRow(),tile->getCol());
     // 90% de chance d'avoir un 2, 10% de chance d'avoir un 4
     int value = (QRandomGenerator::global()->bounded(10) < 9) ? 2 : 4;
 
@@ -85,6 +94,188 @@ bool Board::canMove()
 
     return false;
 }
+
+
+bool Board::invmoveTiles(Direction direction) {
+    // Déplacer les tuiles dans la direction spécifiée
+    switch (direction) {
+    case UP:
+        invmoveDown();
+        break;
+    case RIGHT:
+        invmoveLeft();
+        break;
+    case DOWN:
+        invmoveUp();
+        break;
+    case LEFT:
+        invmoveRight();
+        break;
+    }
+
+    return m_changed;
+}
+
+
+void Board::invmoveUp()
+{
+    for (int j = 0; j < m_size; j++) {
+        for (int i = m_size - 2; i >= 0; i--) {
+            if (m_grid.get(i,j)->getValue() != 0) {
+                int row = i;
+                while (row < m_size - 1) {
+                    Tile* current = m_grid.get(row,j);
+                    Tile* target = m_grid.get(row+1,j);
+
+                    if (target->getValue() == 0) {
+                        target->setValue(current->getValue());
+                        current->setValue(0);
+                        m_changed = true;
+                        row++;}
+
+                    else if (current->isMerged())
+                    {
+                        int mergeValue = current->getValue() / 2;
+                        current->setValue(mergeValue);
+                        target->setValue(mergeValue);
+                        current->setMerged(false);
+                        undo.pop_merged();
+                        m_changed = true;
+                        break;
+
+                    }
+
+                    else {
+                        break;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+void Board::invmoveLeft()
+{
+    for (int i = 0; i < m_size; i++) {
+        for (int j = m_size - 2; j >= 0; j--) {
+            if (m_grid.get(i,j)->getValue() != 0) {
+                int col = j;
+                while (col < m_size - 1) {
+                    Tile* current = m_grid.get(i,col);
+                    Tile* target = m_grid.get(i,col+1);
+
+                    if (target->getValue() == 0) {
+                        target->setValue(current->getValue());
+                        current->setValue(0);
+                        m_changed = true;
+                        col++;}
+
+                    else if (current->isMerged())
+                    {
+                        int mergeValue = current->getValue() / 2;
+                        current->setValue(mergeValue);
+                        target->setValue(mergeValue);
+                        current->setMerged(false);
+                        undo.pop_merged();
+                        m_changed = true;
+                        break;
+
+                    }
+
+                    else {
+                        break;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+
+void Board::invmoveRight()
+{
+    for (int i = 0; i < m_size; i++) {
+        for (int j = 1; j < m_size; j++) {
+            if (m_grid.get(i,j)->getValue() != 0) {
+                int col = j;
+                while (col > 0) {
+                    Tile* current = m_grid.get(i,col);
+                    Tile* target = m_grid.get(i,col-1);
+
+                    if (target->getValue() == 0) {
+                        target->setValue(current->getValue());
+                        current->setValue(0);
+                        m_changed = true;
+                        col--;}
+
+                    else if (current->isMerged())
+                    {
+                        int mergeValue = current->getValue() / 2;
+                        current->setValue(mergeValue);
+                        target->setValue(mergeValue);
+                        current->setMerged(false);
+                        undo.pop_merged();
+                        m_changed = true;
+                        break;
+
+                    }
+
+                    else {
+                        break;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+
+void Board::invmoveDown()
+{
+    for (int j = 0; j < m_size; j++) {
+        for (int i = 1; i < m_size; i++) {
+            if (m_grid.get(i,j)->getValue() != 0) {
+                int row = i;
+                while (row > 0) {
+                    Tile* current = m_grid.get(row,j);
+                    Tile* target = m_grid.get(row-1,j);
+
+                    if (target->getValue() == 0) {
+                        target->setValue(current->getValue());
+                        current->setValue(0);
+                        m_changed = true;
+                        row--;}
+
+                    else if (current->isMerged())
+                    {
+                        int mergeValue = current->getValue() / 2;
+                        current->setValue(mergeValue);
+                        target->setValue(mergeValue);
+                        current->setMerged(false);
+                        undo.pop_merged();
+                        m_changed = true;
+                        break;
+
+                    }
+
+                    else {
+                        break;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
+
+
 
 bool Board::moveTiles(Direction direction)
 {
@@ -137,6 +328,7 @@ void Board::moveUp()
                         int mergeValue = target->getValue() * 2;
                         target->setValue(mergeValue);
                         target->setMerged(true);
+                        undo.store_merged(row,j,row-1,j);
                         current->setValue(0);
                         m_changed = true;
                         emit tileMerged(mergeValue);
@@ -169,6 +361,7 @@ void Board::moveRight()
                         int mergeValue = target->getValue() * 2;
                         target->setValue(mergeValue);
                         target->setMerged(true);
+                        undo.store_merged(i,col,i,col+1);
                         current->setValue(0);
                         m_changed = true;
                         emit tileMerged(mergeValue);
@@ -201,6 +394,7 @@ void Board::moveDown()
                         int mergeValue = target->getValue() * 2;
                         target->setValue(mergeValue);
                         target->setMerged(true);
+                        undo.store_merged(row,j,row+1,j);
                         current->setValue(0);
                         m_changed = true;
                         emit tileMerged(mergeValue);
@@ -233,6 +427,7 @@ void Board::moveLeft()
                         int mergeValue = target->getValue() * 2;
                         target->setValue(mergeValue);
                         target->setMerged(true);
+                        undo.store_merged(i,col,i,col-1);
                         current->setValue(0);
                         m_changed = true;
                         emit tileMerged(mergeValue);

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "direction.h"
+#include "undo.h"
 
 // Déclarations anticipées
 class Game;
@@ -44,6 +45,7 @@ private:
     Game* m_game;
     BoardModel* m_boardModel;
     int m_size;
+    Undo m_undo;
 };
 
 #endif // GAMECONTROLLER_H

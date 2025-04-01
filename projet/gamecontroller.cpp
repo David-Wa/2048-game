@@ -3,6 +3,7 @@
 #include "boardmodel.h"
 #include "board.h"
 #include <QDebug>
+#include "undo.h"
 
 GameController::GameController(QObject* parent)
     : QObject(parent)
@@ -62,7 +63,7 @@ void GameController::newGame(int size)
 void GameController::move(int direction)
 {
     qDebug() << "GameController::move() - Direction:" << direction;
-
+    m_undo.store(direction);
     // Convertir l'entier en Direction enum
     Direction dir;
     switch (direction) {

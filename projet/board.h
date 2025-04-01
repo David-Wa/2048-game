@@ -6,6 +6,7 @@
 #include <QList>
 #include <QObject>
 #include "damierdyn.h"
+#include "undo.h"
 
 class Board : public QObject{
     Q_OBJECT
@@ -14,8 +15,10 @@ public:
     ~Board();
     void initialize(int size);
     void addRandomTile();
+    void delRandomTile();
     bool canMove();
     bool moveTiles(Direction direction);
+    bool invmoveTiles(Direction direction);
     bool isFull();
     bool contains2048();
     void setSize(int newsize);
@@ -29,13 +32,17 @@ private:
     DamierDyn m_grid;
     int m_size;
     bool m_changed;
-
+    Undo undo;
 
     // Méthodes privées pour implémenter les mouvements
     void moveUp();
     void moveRight();
     void moveDown();
     void moveLeft();
+    void invmoveUp();
+    void invmoveRight();
+    void invmoveDown();
+    void invmoveLeft();
 };
 
 #endif // BOARD_H
