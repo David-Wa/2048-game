@@ -18,7 +18,7 @@ public:
     bool moveTiles(Direction direction);
     bool isFull();
     bool contains2048();
-    Q_INVOKABLE void setSize(int newsize);
+    void setSize(int newsize);
     Tile* getTileAt(int row, int col) const;
     QList<Tile*> getEmptyTiles() const;
 signals:
