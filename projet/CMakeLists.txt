@@ -24,6 +24,8 @@ qt_add_qml_module(appProjet
         ressources.qrc
         couleurs.jpg
     SOURCES
+    damierdyn.h
+    damierdyn.cpp
         menubutton.h
         colorpicker.cpp
         colorpicker.h
@@ -41,6 +43,7 @@ qt_add_qml_module(appProjet
         tile.h
         SOURCES colorpicker.h colorpicker.cpp
         RESOURCES couleurs.jpg
+        SOURCES damierdyn.h damierdyn.cpp
 
 )
 

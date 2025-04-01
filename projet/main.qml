@@ -14,13 +14,13 @@ Window {
 
 
     // Dimensions de la grille et des tuiles
-    property int cellSize: 80
-    property int cellSpacing: 10
+    property int cellSize: 0.7*width/taille
+    property int cellSpacing: 0.12*cellSize
     property int gridMargin: 10
     // Déclaration de la variable dans l'objet Window
     property string maincolor: "#FAF8EF"
     property string mainfont: "Sergoe UI"
-
+    property int taille:8
     Item {
         id: keyboardFocus
         focus: true
@@ -197,8 +197,8 @@ Window {
 
     Rectangle {
         id: gameGridBackground
-        width: 4 * cellSize + 5 * cellSpacing
-        height: 4 * cellSize + 5 * cellSpacing
+        width: taille * cellSize + 5 * cellSpacing
+        height: taille * cellSize + 5 * cellSpacing
         color: "#bbada0"
         radius: 5
         anchors.horizontalCenter: parent.horizontalCenter
@@ -209,12 +209,12 @@ Window {
             id: gameGrid
             anchors.fill: parent
             anchors.margins: gridMargin
-            rows: 4
-            columns: 4
+            rows: taille
+            columns: taille
             spacing: cellSpacing
 
             Repeater {
-                model: 16
+                model: taille*taille
                 Cell {
                     width: cellSize
                     height: cellSize
@@ -229,16 +229,16 @@ Window {
 
             Repeater {
                 id: tilesRepeater
-                model: 16
+                model: taille*taille
 
                 Tile {
                     width: cellSize
                     height: cellSize
-                    x: (index % 4) * (cellSize + cellSpacing)
-                    y: Math.floor(index / 4) * (cellSize + cellSpacing)
+                    x: (index % taille) * (cellSize + cellSpacing)
+                    y: Math.floor(index / taille) * (cellSize + cellSpacing)
                     value: {
-                        var row = Math.floor(index / 4);
-                        var col = index % 4;
+                        var row = Math.floor(index / taille);
+                        var col = index % taille;
                         var tileValue = gameController.boardModel.getTileValue(row, col);
                         return tileValue;
                     }
@@ -278,7 +278,7 @@ Window {
         function onBoardModelChanged() {
             console.log("Modèle du plateau changé");
             tilesRepeater.model = 0;
-            tilesRepeater.model = 16;
+            tilesRepeater.model = taille*taille;
         }
     }
 
@@ -627,6 +627,8 @@ Rectangle {
                     font.family:mainfont
                     anchors.top: parent.top
                  anchors.horizontalCenter: parent.horizontalCenter
+                 onClicked: {
+                 gameController.setSize(4); }
 
                 }
 

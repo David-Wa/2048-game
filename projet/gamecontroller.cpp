@@ -8,12 +8,20 @@ GameController::GameController(QObject* parent)
     : QObject(parent)
     , m_game(new Game())
     , m_boardModel(new BoardModel(this, m_game->getBoard()))
+    , m_size(SIZE)
 {
     qDebug() << "GameController créé";
 
     // Initialiser une nouvelle partie
     newGame();
 }
+
+
+void GameController::setSize(int newsize)
+{
+    m_size=newsize;
+}
+
 
 GameController::~GameController()
 {
@@ -39,8 +47,8 @@ void GameController::newGame()
     emit boardModelChanged();
 
     // Afficher l'état initial du plateau pour débogage
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < m_size; i++) {
+        for (int j = 0; j < m_size; j++) {
             int value = m_boardModel->getTileValue(i, j);
             if (value > 0) {
                 qDebug() << "Tuile (" << i << "," << j << ") =" << value;
@@ -85,8 +93,8 @@ void GameController::move(int direction)
     }
 
     // Afficher l'état du plateau après le mouvement pour débogage
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < m_size; i++) {
+        for (int j = 0; j < m_size; j++) {
             int value = m_boardModel->getTileValue(i, j);
             if (value > 0) {
                 qDebug() << "Tuile (" << i << "," << j << ") =" << value;

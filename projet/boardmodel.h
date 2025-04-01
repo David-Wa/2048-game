@@ -5,6 +5,8 @@
 #include <QList>
 #include <QAbstractListModel>
 #include "direction.h"
+#include "damierdyn.h"
+
 
 // Déclarations anticipées
 class Board;
@@ -35,10 +37,11 @@ public:
     // Méthode accessible depuis QML
     Q_INVOKABLE int getTileValue(int row, int col) const;
     Q_INVOKABLE Tile* getTileAt(int row, int col) const;
-
+    Q_INVOKABLE void setSize(int newsize);
 private:
     Board* m_board;
-    Tile* m_grid[SIZE][SIZE];
+    //Tile* m_grid[SIZE][SIZE];
+    DamierDyn m_grid;
     int m_size;
     bool m_changed;
 };

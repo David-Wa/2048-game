@@ -31,6 +31,7 @@ public slots:
 
     // Méthode pour mettre à jour le score en fonction de l'état du plateau
     //void updateScore();
+    Q_INVOKABLE void setSize(int newsize);
 
 private:
     Board* m_board;
@@ -38,6 +39,7 @@ private:
     int m_bestScore;
     bool m_gameOver;
     bool m_gameWon;
+    int m_size;
 };
 
 #endif // GAME_H

@@ -2,21 +2,26 @@
 #include "board.h"
 #include "tile.h"
 
+
 BoardModel::BoardModel(QObject* parent, Board* board)
     : QAbstractListModel(parent)
     , m_board(board)
     , m_size(SIZE)
     , m_changed(false)
+    ,  m_grid(SIZE,SIZE)
+
 {
-    // Initialiser la grille du modèle
-    for (int i = 0; i < m_size; i++) {
-        for (int j = 0; j < m_size; j++) {
-            m_grid[i][j] = nullptr;
-        }
-    }
 
     refresh();
 }
+
+void BoardModel::setSize(int newsize)
+{
+    m_size=newsize;
+    m_grid.redim(m_size,m_size);
+}
+
+
 
 BoardModel::~BoardModel()
 {
@@ -26,7 +31,7 @@ BoardModel::~BoardModel()
 int BoardModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return SIZE * SIZE; // Taille totale de la grille
+    return m_size * m_size; // Taille totale de la grille
 }
 
 QVariant BoardModel::data(const QModelIndex &index, int role) const
@@ -34,8 +39,8 @@ QVariant BoardModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    int row = index.row() / SIZE;
-    int col = index.row() % SIZE;
+    int row = index.row() / m_size;
+    int col = index.row() % m_size;
 
     Tile* tile = getTileAt(row, col);
 
@@ -79,9 +84,9 @@ void BoardModel::initialize()
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
             if (m_board && m_board->getTileAt(i, j)) {
-                m_grid[i][j] = m_board->getTileAt(i, j);
+                m_grid.set(i,j,m_board->getTileAt(i, j));
             } else {
-                m_grid[i][j] = nullptr;
+                m_grid.set(i,j, nullptr);
             }
         }
     }
@@ -97,7 +102,7 @@ void BoardModel::refresh()
     if (m_board) {
         for (int i = 0; i < m_size; i++) {
             for (int j = 0; j < m_size; j++) {
-                m_grid[i][j] = m_board->getTileAt(i, j);
+                m_grid.set(i,j, m_board->getTileAt(i, j));
             }
         }
     }
@@ -107,7 +112,7 @@ void BoardModel::refresh()
 Tile* BoardModel::getTileAt(int row, int col) const
 {
     if (row >= 0 && row < m_size && col >= 0 && col < m_size) {
-        return m_grid[row][col];
+        return m_grid.get(row,col);
     }
     return nullptr;
 }

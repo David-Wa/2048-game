@@ -32,7 +32,7 @@ public:
     Q_INVOKABLE bool isGameWon();
     Q_INVOKABLE void saveGame();
     Q_INVOKABLE void loadGame();
-
+    Q_INVOKABLE void setSize(int newsize);
 signals:
     void boardModelChanged();
     void scoreChanged();
@@ -43,6 +43,7 @@ signals:
 private:
     Game* m_game;
     BoardModel* m_boardModel;
+    int m_size;
 };
 
 #endif // GAMECONTROLLER_H

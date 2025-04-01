@@ -10,6 +10,7 @@ Game::Game(QObject* parent)
     , m_bestScore(0)
     , m_gameOver(false)
     , m_gameWon(false)
+    ,m_size(SIZE)
 {
     // Charger le meilleur score depuis les settings
     QSettings settings("YourCompany", "2048Game");
@@ -23,6 +24,13 @@ Game::~Game()
 {
     delete m_board;
 }
+
+void Game::setSize(int newsize)
+{
+    m_size=newsize;
+}
+
+
 
 void Game::newGame()
 {
@@ -126,8 +134,8 @@ void Game::saveGame()
 
     // Sauvegarder l'état du plateau
     // Sauvegarder chaque tuile
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+    for (int i = 0; i < m_size; i++) {
+        for (int j = 0; j < m_size; j++) {
             Tile* tile = m_board->getTileAt(i, j);
             if (tile) {
                 settings.setValue(QString("tile_%1_%2").arg(i).arg(j), tile->getValue());

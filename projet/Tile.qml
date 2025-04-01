@@ -45,6 +45,7 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         text: value !== 0 ? value : ""
+        font.family: mainfont
         font.bold: true
         font.pixelSize: getFontSize(value)
         color: getTextColor(value)

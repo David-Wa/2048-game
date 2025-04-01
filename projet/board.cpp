@@ -5,8 +5,16 @@ Board::Board(QObject* parent)
     : QObject(parent)
     , m_size(SIZE)
     , m_changed(false)
-{
+    , m_grid(SIZE,SIZE)
+{   m_grid.init();
     initialize();
+
+}
+
+void Board::setSize(int newsize)
+{
+    m_size=newsize;
+    m_grid.redim(m_size,m_size);
 }
 
 Board::~Board()
@@ -14,19 +22,20 @@ Board::~Board()
     // Nettoyer les tuiles
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            delete m_grid[i][j];
+            m_grid.del(i,j);
         }
     }
 }
+
+
 
 void Board::initialize()
 {
     // Initialiser toutes les tuiles avec des valeurs vides
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            m_grid[i][j] = new Tile();
-            m_grid[i][j]->setPosition(i, j);
-            m_grid[i][j]->setValue(0); // 0 représente une case vide
+            m_grid.get(i,j)->setPosition(i, j);
+            m_grid.get(i,j)->setValue(0); // 0 représente une case vide
         }
     }
 
@@ -58,15 +67,15 @@ bool Board::canMove()
     // Vérifier si des fusions sont possibles
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            int value = m_grid[i][j]->getValue();
+            int value = m_grid.get(i,j)->getValue();
 
             // Vérifier la tuile à droite
-            if (j < m_size - 1 && value == m_grid[i][j+1]->getValue()) {
+            if (j < m_size - 1 && value == m_grid.get(i,j+1)->getValue()) {
                 return true;
             }
 
             // Vérifier la tuile en dessous
-            if (i < m_size - 1 && value == m_grid[i+1][j]->getValue()) {
+            if (i < m_size - 1 && value == m_grid.get(i+1,j)->getValue()) {
                 return true;
             }
         }
@@ -82,7 +91,7 @@ bool Board::moveTiles(Direction direction)
     // Réinitialiser l'état fusionné de toutes les tuiles
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            m_grid[i][j]->setMerged(false);
+            m_grid.get(i,j)->setMerged(false);
         }
     }
 
@@ -109,11 +118,11 @@ void Board::moveUp()
 {
     for (int j = 0; j < m_size; j++) {
         for (int i = 1; i < m_size; i++) {
-            if (m_grid[i][j]->getValue() != 0) {
+            if (m_grid.get(i,j)->getValue() != 0) {
                 int row = i;
                 while (row > 0) {
-                    Tile* current = m_grid[row][j];
-                    Tile* target = m_grid[row-1][j];
+                    Tile* current = m_grid.get(row,j);
+                    Tile* target = m_grid.get(row-1,j);
 
                     if (target->getValue() == 0) {
                         // Déplacer vers la case vide
@@ -143,11 +152,11 @@ void Board::moveRight()
 {
     for (int i = 0; i < m_size; i++) {
         for (int j = m_size - 2; j >= 0; j--) {
-            if (m_grid[i][j]->getValue() != 0) {
+            if (m_grid.get(i,j)->getValue() != 0) {
                 int col = j;
                 while (col < m_size - 1) {
-                    Tile* current = m_grid[i][col];
-                    Tile* target = m_grid[i][col+1];
+                    Tile* current = m_grid.get(i,col);
+                    Tile* target = m_grid.get(i,col+1);
 
                     if (target->getValue() == 0) {
                         target->setValue(current->getValue());
@@ -175,11 +184,11 @@ void Board::moveDown()
 {
     for (int j = 0; j < m_size; j++) {
         for (int i = m_size - 2; i >= 0; i--) {
-            if (m_grid[i][j]->getValue() != 0) {
+            if (m_grid.get(i,j)->getValue() != 0) {
                 int row = i;
                 while (row < m_size - 1) {
-                    Tile* current = m_grid[row][j];
-                    Tile* target = m_grid[row+1][j];
+                    Tile* current = m_grid.get(row,j);
+                    Tile* target = m_grid.get(row+1,j);
 
                     if (target->getValue() == 0) {
                         target->setValue(current->getValue());
@@ -207,11 +216,11 @@ void Board::moveLeft()
 {
     for (int i = 0; i < m_size; i++) {
         for (int j = 1; j < m_size; j++) {
-            if (m_grid[i][j]->getValue() != 0) {
+            if (m_grid.get(i,j)->getValue() != 0) {
                 int col = j;
                 while (col > 0) {
-                    Tile* current = m_grid[i][col];
-                    Tile* target = m_grid[i][col-1];
+                    Tile* current = m_grid.get(i,col);
+                    Tile* target = m_grid.get(i,col-1);
 
                     if (target->getValue() == 0) {
                         target->setValue(current->getValue());
@@ -239,7 +248,7 @@ bool Board::isFull()
 {
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            if (m_grid[i][j]->getValue() == 0) {
+            if (m_grid.get(i,j)->getValue() == 0) {
                 return false;
             }
         }
@@ -251,7 +260,7 @@ bool Board::contains2048()
 {
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            if (m_grid[i][j]->getValue() == 2048) {
+            if (m_grid.get(i,j)->getValue() == 2048) {
                 return true;
             }
         }
@@ -262,7 +271,7 @@ bool Board::contains2048()
 Tile* Board::getTileAt(int row, int col) const
 {
     if (row >= 0 && row < m_size && col >= 0 && col < m_size) {
-        return m_grid[row][col];
+        return m_grid.get(row,col);
     }
     return nullptr;
 }
@@ -273,8 +282,8 @@ QList<Tile*> Board::getEmptyTiles() const
 
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {
-            if (m_grid[i][j]->getValue() == 0) {
-                emptyTiles.append(m_grid[i][j]);
+            if (m_grid.get(i,j)->getValue() == 0) {
+                emptyTiles.append(m_grid.get(i,j));
             }
         }
     }
