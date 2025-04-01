@@ -13,12 +13,13 @@ GameController::GameController(QObject* parent)
     qDebug() << "GameController créé";
 
     // Initialiser une nouvelle partie
-    newGame();
+    newGame(m_size);
 }
 
 
 void GameController::setSize(int newsize)
-{
+{    m_game->setSize(newsize);
+    m_boardModel->setSize(newsize);
     m_size=newsize;
 }
 
@@ -33,12 +34,13 @@ BoardModel* GameController::boardModel() const
     return m_boardModel;
 }
 
-void GameController::newGame()
+void GameController::newGame(int size)
 {
     qDebug() << "GameController::newGame() - Démarrage d'une nouvelle partie";
-
-    m_game->newGame();
-    m_boardModel->refresh();
+    if (m_size!=size){
+        setSize(size);}
+    m_game->newGame(size);
+    m_boardModel->refresh(size);
 
     emit scoreChanged();
     emit bestScoreChanged();
@@ -75,7 +77,7 @@ void GameController::move(int direction)
     m_game->move(dir);
 
     // Mettre à jour le modèle
-    m_boardModel->refresh();
+    m_boardModel->refresh(m_size);
 
     // Notifier les changements
     emit scoreChanged();
@@ -133,7 +135,7 @@ void GameController::loadGame()
 {
     qDebug() << "GameController::loadGame() - Chargement de la partie";
     m_game->loadGame();
-    m_boardModel->refresh();
+    m_boardModel->refresh(m_size);
 
     emit scoreChanged();
     emit bestScoreChanged();

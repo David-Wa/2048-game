@@ -12,13 +12,15 @@ BoardModel::BoardModel(QObject* parent, Board* board)
 
 {
 
-    refresh();
+    refresh(m_size);
 }
 
 void BoardModel::setSize(int newsize)
-{
+{   if (m_size!=newsize){
     m_size=newsize;
     m_grid.redim(m_size,m_size);
+    m_board->setSize(newsize);}
+
 }
 
 
@@ -95,10 +97,12 @@ void BoardModel::initialize()
     m_changed = true;
 }
 
-void BoardModel::refresh()
+void BoardModel::refresh(int size)
 {
     // Mettre à jour le modèle à partir du plateau
     beginResetModel();
+    if (m_size!=size){
+        setSize(size);}
     if (m_board) {
         for (int i = 0; i < m_size; i++) {
             for (int j = 0; j < m_size; j++) {

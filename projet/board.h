@@ -12,7 +12,7 @@ class Board : public QObject{
 public:
     Board(QObject* parent = nullptr);
     ~Board();
-    void initialize();
+    void initialize(int size);
     void addRandomTile();
     bool canMove();
     bool moveTiles(Direction direction);

@@ -7,14 +7,15 @@ Board::Board(QObject* parent)
     , m_changed(false)
     , m_grid(SIZE,SIZE)
 {   m_grid.init();
-    initialize();
+    initialize(m_size);
 
 }
 
 void Board::setSize(int newsize)
-{
+{ if (newsize!=m_size) {
     m_size=newsize;
-    m_grid.redim(m_size,m_size);
+        m_grid.redim(m_size,m_size);
+    }
 }
 
 Board::~Board()
@@ -29,8 +30,9 @@ Board::~Board()
 
 
 
-void Board::initialize()
-{
+void Board::initialize(int size)
+{   if (m_size!=size){
+        setSize(size);}
     // Initialiser toutes les tuiles avec des valeurs vides
     for (int i = 0; i < m_size; i++) {
         for (int j = 0; j < m_size; j++) {

@@ -28,16 +28,19 @@ Game::~Game()
 void Game::setSize(int newsize)
 {
     m_size=newsize;
+    m_board->setSize(newsize);
 }
 
 
 
-void Game::newGame()
+void Game::newGame(int size)
 {
     qDebug() << "Game::newGame() - Démarrage d'une nouvelle partie";
 
     // Réinitialiser le jeu
-    m_board->initialize();
+    if (m_size!=size){
+        setSize(size);}
+    m_board->initialize(m_size);
     m_score = 0;
     m_gameOver = false;
     m_gameWon = false;
@@ -155,7 +158,7 @@ void Game::loadGame()
 
     // Charger l'état du plateau
     // Réinitialiser d'abord le plateau
-    m_board->initialize();
+    m_board->initialize(m_size);
 
     // Charger chaque tuile
     for (int i = 0; i < SIZE; i++) {

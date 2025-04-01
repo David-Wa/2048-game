@@ -5,6 +5,6 @@
 enum Direction { UP, RIGHT, DOWN, LEFT };
 
 // Constante globale pour la taille du plateau
-const int SIZE = 8;
+const int SIZE = 5;
 
 #endif // DIRECTION_H

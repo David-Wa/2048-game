@@ -32,7 +32,7 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     void initialize();
-    void refresh();
+    void refresh(int size);
 
     // Méthode accessible depuis QML
     Q_INVOKABLE int getTileValue(int row, int col) const;

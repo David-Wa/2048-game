@@ -24,7 +24,7 @@ public:
     BoardModel* boardModel() const;
 
     // Méthodes invocables depuis QML
-    Q_INVOKABLE void newGame();
+    Q_INVOKABLE void newGame(int size);
     Q_INVOKABLE void move(int direction);
     Q_INVOKABLE int getScore();
     Q_INVOKABLE int getBestScore();

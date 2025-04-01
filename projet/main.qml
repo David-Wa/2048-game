@@ -20,7 +20,7 @@ Window {
     // Déclaration de la variable dans l'objet Window
     property string maincolor: "#FAF8EF"
     property string mainfont: "Sergoe UI"
-    property int taille:8
+    property int taille:5
     Item {
         id: keyboardFocus
         focus: true
@@ -105,7 +105,7 @@ Window {
 
             onClicked: {
                 console.log("Bouton nouvelle partie cliqué");
-                gameController.newGame();
+                gameController.newGame(taille);
             }
 
             contentItem: Text {
@@ -609,71 +609,203 @@ Rectangle {
 
 
 // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+Rectangle {
+    id: heightWindow
+    anchors.fill: parent
+    visible: false  // Initialement, la fenêtre est invisible
+    color: maincolor  // Couleur de fond de la fenêtre
 
-        Rectangle {
-            id: heightWindow
+
+    Rectangle {
+        width: 300
+        height: 50
+        color: "white"
+        radius: 10
+        border.color: "#cccccc"
+        border.width: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Text {
+            text: "Choisissez la taille de la grille de jeu"
+            font.family:mainfont
+            font.pixelSize: 20
+            font.bold: true
+            color: "#333"
+            anchors.centerIn: parent
+        }
+    }
+
+    Column {
+        width: parent.width * 0.8
+        height: 400
+        spacing: 20  // Espacement entre les boutons
+        anchors.centerIn: parent
+
+        // Style des boutons
+        Button {
+            text: "4"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            background: Rectangle {
+                color: "#4CAF50"  // Couleur de fond verte
+                radius: 10  // Coins arrondis
+                border.color: "#388E3C"  // Couleur de bordure
+                border.width: 2
+            }
+
+
+            contentItem: Text {
+                text: "4"
+                font.pixelSize: 18
+                color: "white"
+                font.bold: true
+            }
+            onClicked: {
+                if (taille != 4) {
+                    taille = 4;
+                    gameController.newGame(taille);
+                }
+            }
+        }
+
+        Button {
+            text: "5"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            background: Rectangle {
+                color: "#2196F3"  // Couleur de fond bleue
+                radius: 10
+                border.color: "#1976D2"
+                border.width: 2
+            }
+            contentItem: Text {
+                text: "5"
+                font.pixelSize: 18
+                color: "white"
+                font.bold: true
+            }
+            onClicked: {
+                if (taille != 5) {
+                    taille = 5;
+                    gameController.newGame(taille);
+                }
+            }
+        }
+
+        Button {
+            text: "6"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            background: Rectangle {
+                color: "#FF9800"  // Couleur de fond orange
+                radius: 10
+                border.color: "#F57C00"
+                border.width: 2
+            }
+            contentItem: Text {
+                text: "6"
+                font.pixelSize: 18
+                color: "white"
+                font.bold: true
+            }
+            onClicked: {
+                if (taille != 6) {
+                    taille = 6;
+                    gameController.newGame(taille);
+                }
+            }
+        }
+
+        Button {
+            text: "7"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            background: Rectangle {
+                color: "#FF5722"  // Couleur de fond rouge-orange
+                radius: 10
+                border.color: "#D32F2F"
+                border.width: 2
+            }
+            contentItem: Text {
+                text: "7"
+                font.pixelSize: 18
+                color: "white"
+                font.bold: true
+            }
+            onClicked: {
+                if (taille != 7) {
+                    taille = 7;
+                    gameController.newGame(taille);
+                }
+            }
+        }
+
+        Button {
+            text: "8"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            background: Rectangle {
+                color: "#9C27B0"  // Couleur de fond violet
+                radius: 10
+                border.color: "#7B1FA2"
+                border.width: 2
+            }
+            contentItem: Text {
+                text: "8"
+                font.pixelSize: 18
+                color: "white"
+                font.bold: true
+            }
+            onClicked: {
+                if (taille != 8) {
+                    taille = 8;
+                    gameController.newGame(taille);
+                }
+            }
+        }
+    }
+
+    // Bouton de fermeture
+    Button {
+        text: "X"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 10
+        background: Rectangle {
+            color: "#ff6666"  // Couleur rouge pour le bouton de fermeture
+            radius: 10
+        }
+        contentItem: Text {
+            text: "X"
+            font.pixelSize: 18
+            color: "white"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: {
+            heightWindow.visible = false;
+            menuWindow.visible = true;
+        }
+
+        // Effet visuel de survol (change de couleur lorsqu'on survole)
+        MouseArea {
             anchors.fill: parent
-            visible: false  // Initialement, la fenêtre est invisible
-
-            Column {
-                width: 200
-                height: 400
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-
-                Button {
-                    text:"4"
-                    font.family:mainfont
-                    anchors.top: parent.top
-                 anchors.horizontalCenter: parent.horizontalCenter
-                 onClicked: {
-                 gameController.setSize(4); }
-
-                }
-
-                Button {
-                    text:"5"
-                    font.family:mainfont
-                    anchors.verticalCenter: parent.verticalCenter
-                 anchors.horizontalCenter: parent.horizontalCenter
-
-                }
-
-            Button {
-                text:"6"
-                font.family:mainfont
-                anchors.bottom: parent.bottom
-             anchors.horizontalCenter: parent.horizontalCenter
-
-            }
-
-}
-
-            // Bouton de fermeture
-            Button {
-                text: "X"
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.margins: 10
-                background: Rectangle {
-                    color: "#ff6666"
-                    radius: 10
-                }
-                contentItem: Text {
-                    text: "X"
-                    font.pixelSize: 18
-                    color: "white"
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-                onClicked: {
-                   heightWindow.visible = false;
-                    menuWindow.visible = true;
+            onClicked: parent.clicked()
+            onHoveredChanged: {
+                if (parent.containsMouse) {
+                    parent.background.color = "#FF4D4D";  // Couleur plus foncée au survol
+                } else {
+                    parent.background.color = "#FF6666";  // Couleur d'origine
                 }
             }
-
+        }
+    }
 }
 
 

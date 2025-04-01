@@ -13,7 +13,7 @@ public:
     Game(QObject* parent = nullptr);
     ~Game();
 
-    void newGame();
+    void newGame(int size);
     void move(Direction direction);
     int getScore() const;
     int getBestScore() const;
