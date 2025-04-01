@@ -9,7 +9,7 @@ ColorPicker::ColorPicker() {}
 
 QString ColorPicker::getPixelColor(int x, int y)//, const QString &imagePath)
 {//QImage image(imagePath);
-    QImage image("D:/C_mas_mas/2048-c/Projet/couleurs.jpg");
+    QImage image("/Users/anas/Documents/GitHub/2048-c/projet");
 
 
     if (image.isNull()) {

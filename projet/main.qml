@@ -78,6 +78,7 @@ Window {
             anchors.leftMargin: 20
             anchors.topMargin: 40
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -20
         }
 
         Button{
@@ -96,10 +97,11 @@ Window {
             id: newGameButton
             text: "Nouvelle partie"
             font.family:mainfont
+            font.bold: true
             width: 120
             height: 40
             anchors.top: gameTitle.bottom
-            anchors.topMargin: 3
+            anchors.topMargin: 2
             anchors.horizontalCenter: gameTitle.horizontalCenter
             z: 1
 
@@ -133,6 +135,7 @@ Window {
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -20
 
             Text {
                 id: scoreLabel
@@ -168,6 +171,7 @@ Window {
             anchors.right: scoreBox.left
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -20
 
             Text {
                 id: bestScoreLabel
@@ -179,6 +183,7 @@ Window {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 5
+
             }
 
             Text {
@@ -197,13 +202,13 @@ Window {
 
     Rectangle {
         id: gameGridBackground
-        width: taille * cellSize + 5 * cellSpacing
-        height: taille * cellSize + 5 * cellSpacing
+        width: taille * cellSize + (taille + 1) * cellSpacing
+        height: taille * cellSize + (taille + 1) * cellSpacing
         color: "#bbada0"
         radius: 5
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: header.bottom
-        anchors.topMargin: 20
+        anchors.topMargin: 58
 
         Grid {
             id: gameGrid
@@ -325,7 +330,7 @@ Window {
         height: 100
         color: "#8f7a66"
         anchors.top: gameGridBackground.bottom
-        anchors.topMargin: 20
+        anchors.topMargin: 10
 
         Text {
             id: instructions
@@ -626,7 +631,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: "Choisissez la taille de la grille de jeu"
+            text: "Choisissez la taille\n de la grille de jeu"
             font.family:mainfont
             font.pixelSize: 20
             font.bold: true
