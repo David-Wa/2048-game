@@ -33,11 +33,11 @@ public:
 
     void initialize();
     void refresh(int size);
-
+    void setSize(int newsize);
     // Méthode accessible depuis QML
     Q_INVOKABLE int getTileValue(int row, int col) const;
     Q_INVOKABLE Tile* getTileAt(int row, int col) const;
-    Q_INVOKABLE void setSize(int newsize);
+
 private:
     Board* m_board;
     //Tile* m_grid[SIZE][SIZE];

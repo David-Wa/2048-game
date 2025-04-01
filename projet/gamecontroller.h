@@ -19,7 +19,7 @@ class GameController : public QObject {
 public:
     explicit GameController(QObject* parent = nullptr);
     ~GameController();
-
+       void setSize(int newsize);
     // Accesseur pour les propriétés Qt
     BoardModel* boardModel() const;
 
@@ -32,7 +32,7 @@ public:
     Q_INVOKABLE bool isGameWon();
     Q_INVOKABLE void saveGame();
     Q_INVOKABLE void loadGame();
-    Q_INVOKABLE void setSize(int newsize);
+
 signals:
     void boardModelChanged();
     void scoreChanged();
