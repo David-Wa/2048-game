@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
 
 
 Window {
@@ -19,7 +19,7 @@ Window {
     property int gridMargin: 10
     // Déclaration de la variable dans l'objet Window
     property string maincolor: "#FFE6A7"
-    property string mainfont: "Sergoe UI"
+    property string mainfont: "Segoe UI"
     property int taille:5
 
     Item {
@@ -84,14 +84,33 @@ Window {
 
         Button{
             id:openMenu
-            text: "="
             font.family:mainfont
-            width: 40
+            anchors.top: scoreBox.top
+            anchors.left: gameTitle.right
+            anchors.leftMargin: 28
+            anchors.topMargin: 0
+            width: 120
             height: 40
-            anchors.top: header.top
-            anchors.horizontalCenter: header.horizontalCenter
             onClicked:{
             menuWindow.visible=true}
+
+            contentItem: Text {
+                text: "Menu"
+                font {
+                        family: mainfont
+                        pixelSize: 18
+                        bold: true  // optionnel
+                    }
+                color: "black"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle {
+                color: "#BB9457"
+                radius: 5
+            }
+
         }
 
         Button {
@@ -556,23 +575,18 @@ Rectangle {
         id: column
         width: 200
         height: 400
+        spacing: 30
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
 
-
-
-
-
         MenuButton { id: bouton_couleur
-            anchors.top: parent.top
-        anchors.topMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
             buttonText: "Couleur"
             // Connexion au signal 'openMenu' pour ouvrir une nouvelle fenêtre
             Connections {
                 target: vueObjetBtn
-                onOpenMenu: {if (vueObjetBtn.buttonName==="Couleur"){
+                function onOpenMenu()  {if (vueObjetBtn.buttonName==="Couleur"){
                     colorWindow.visible = true;  // Ouvre la fenêtre du menu en la rendant visible
                         menuWindow.visible=false;
               }
@@ -582,50 +596,64 @@ Rectangle {
 
 
         MenuButton { id: bouton_taille
-            anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 buttonText: "Taille"
                 // Connexion au signal 'openMenu' pour ouvrir une nouvelle fenêtre
                 Connections {
                     target: vueObjetBtn
-                    onOpenMenu: {if (vueObjetBtn.buttonName==="Taille"){
-                        heightWindow.visible = true;
-                            menuWindow.visible=false;// Ouvre la fenêtre du menu en la rendant visible
-                                    }}
-                }}
+                    function onOpenMenu() {
+                        if (vueObjetBtn.buttonName === "Taille") {
+                            heightWindow.visible = true;
+                            menuWindow.visible = false; // Ouvre la fenêtre du menu en la rendant visible
+                        }
+                    }
+                }
+        }
 
 
 
                 MenuButton { id: bouton_police
                     y: 198
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     buttonText: "Police"
                     // Connexion au signal 'openMenu' pour ouvrir une nouvelle fenêtre
                     Connections {
                         target: vueObjetBtn
-                        onOpenMenu: {if (vueObjetBtn.buttonName==="Police"){
-                            policeWindow.visible = true;
+                        function onOpenMenu(){
+                            if (vueObjetBtn.buttonName==="Police"){
+                                policeWindow.visible = true;
                                 menuWindow.visible=false;// Ouvre la fenêtre du menu en la rendant visible
-                                        }}
-                    }}
+                            }
+                        }
+                    }
+                }
 
-        }
+                MenuButton {
+                    id: bouton_difficulte
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    buttonText: "Difficulté"
+                    // Connexion au signal 'openMenu'
+                    Connections {
+                        target: vueObjetBtn
+                        function onOpenMenu() {
+                            if (vueObjetBtn.buttonName === "Difficulté") {
+                                difficultyWindow.visible = true;
+                                menuWindow.visible = false;
+                            }
+                        }
+                    }
+                }
 
 
 
 
 
-MenuButton {
-    id: bouton_difficulte
-    anchors.horizontalCenter: parent.horizontalCenter
-    // Positionner entre bouton_taille et bouton_police
-    anchors.top: bouton_taille.bottom
-    anchors.topMargin: 20
-    buttonText: "Difficulté"
+    }
 
-}
+
+
+
+
 
 }
 
@@ -789,7 +817,7 @@ Rectangle {
 
         // Style des boutons
         Button {
-            text: "4"
+            text: "Grille 4X4"
             font.family: mainfont
             font.pixelSize: 18
             anchors.horizontalCenter: parent.horizontalCenter
@@ -802,7 +830,7 @@ Rectangle {
 
 
             contentItem: Text {
-                text: "4"
+                text: "Grille 4X4"
                 font.pixelSize: 18
                 color: "white"
                 font.bold: true
@@ -816,7 +844,7 @@ Rectangle {
         }
 
         Button {
-            text: "5"
+            text: "Grille 5X5"
             font.family: mainfont
             font.pixelSize: 18
             anchors.horizontalCenter: parent.horizontalCenter
@@ -827,7 +855,7 @@ Rectangle {
                 border.width: 2
             }
             contentItem: Text {
-                text: "5"
+                text: "Grille 5X5"
                 font.pixelSize: 18
                 color: "white"
                 font.bold: true
@@ -841,7 +869,7 @@ Rectangle {
         }
 
         Button {
-            text: "6"
+            text: "Grille 6X6"
             font.family: mainfont
             font.pixelSize: 18
             anchors.horizontalCenter: parent.horizontalCenter
@@ -852,7 +880,7 @@ Rectangle {
                 border.width: 2
             }
             contentItem: Text {
-                text: "6"
+                text: "Grille 6X6"
                 font.pixelSize: 18
                 color: "white"
                 font.bold: true
@@ -866,7 +894,7 @@ Rectangle {
         }
 
         Button {
-            text: "7"
+            text: "Grille 7X7"
             font.family: mainfont
             font.pixelSize: 18
             anchors.horizontalCenter: parent.horizontalCenter
@@ -877,7 +905,7 @@ Rectangle {
                 border.width: 2
             }
             contentItem: Text {
-                text: "7"
+                text: "Grille 7X7"
                 font.pixelSize: 18
                 color: "white"
                 font.bold: true
@@ -891,7 +919,7 @@ Rectangle {
         }
 
         Button {
-            text: "8"
+            text: "Grille 8X8"
             font.family: mainfont
             font.pixelSize: 18
             anchors.horizontalCenter: parent.horizontalCenter
@@ -902,7 +930,7 @@ Rectangle {
                 border.width: 2
             }
             contentItem: Text {
-                text: "8"
+                text: "Grille 8X8"
                 font.pixelSize: 18
                 color: "white"
                 font.bold: true

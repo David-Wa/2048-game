@@ -1,11 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-
 project(Projet VERSION 0.1 LANGUAGES CXX)
-
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 find_package(Qt6 REQUIRED COMPONENTS Quick)
-
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appProjet
@@ -21,13 +17,12 @@ qt_add_qml_module(appProjet
         Tile.qml
         Cell.qml
     RESOURCES
-        ressources.qrc
         couleurs.jpg
     SOURCES
-    undo.h
-    undo.cpp
-    damierdyn.h
-    damierdyn.cpp
+        undo.h
+        undo.cpp
+        damierdyn.h
+        damierdyn.cpp
         menubutton.h
         colorpicker.cpp
         colorpicker.h
@@ -43,18 +38,12 @@ qt_add_qml_module(appProjet
         game.h
         gamecontroller.h
         tile.h
-        SOURCES colorpicker.h colorpicker.cpp
-        RESOURCES couleurs.jpg
-        SOURCES damierdyn.h damierdyn.cpp
-        SOURCES undo.h undo.cpp
-
 )
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
+# Ajouter les ressources séparément
+qt_add_resources(appProjet "ressources.qrc")
+
 set_target_properties(appProjet PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appProjet
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
