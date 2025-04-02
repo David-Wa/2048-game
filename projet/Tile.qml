@@ -12,32 +12,48 @@ Rectangle {
     // Couleurs pour différentes valeurs
     function getTileColor(value) {
         switch(value) {
-            case 2: return "#eee4da";
-            case 4: return "#ede0c8";
-            case 8: return "#f2b179";
-            case 16: return "#f59563";
-            case 32: return "#f67c5f";
-            case 64: return "#f65e3b";
-            case 128: return "#edcf72";
-            case 256: return "#edcc61";
-            case 512: return "#edc850";
-            case 1024: return "#edc53f";
-            case 2048: return "#edc22e";
-            default: return "#cdc1b4";
+        case 2: return "#F5EED6";       // Beige très clair
+        case 4: return "#F0E0C0";       // Beige clair
+        case 8: return "#E6BC80";       // Doré clair
+        case 16: return "#D9A76C";      // Doré moyen
+        case 32: return "#C58C58";      // Doré-brun
+        case 64: return "#B17645";      // Marron-orange
+        case 128: return "#9F654A";     // Brun-rouge
+        case 256: return "#8C543F";     // Brun foncé
+        case 512: return "#774936";     // Brun-chocolat
+        case 1024: return "#613E2F";    // Marron foncé
+        case 2048: return "#4A3228";    // Marron très foncé
+        default: return "#D3C2A9";
         }
     }
 
     // Couleur du texte selon la valeur
     function getTextColor(value) {
-        return (value <= 4) ? "#776e65" : "white";
+        return (value <= 36) ?"#5A3D30" : "#F5EED6";
     }
 
     // Taille du texte selon la longueur du nombre
     function getFontSize(value) {
-        let valueStr = value.toString();
-        if (valueStr.length > 3) return 22;
-        else if (valueStr.length > 2) return 28;
-        else return 35;
+        // Récupérer la taille de la grille depuis la propriété globale
+                let gridSize = taille;
+
+                // Coefficient de base basé sur la taille de la tuile
+                let baseSize = root.width / 2;
+
+                // Facteur de réduction basé sur la longueur du nombre
+                let valueStr = value.toString();
+                let lengthFactor = 1;
+
+                if (valueStr.length > 3) {
+                    lengthFactor = 0.6; // 4 chiffres (1024, 2048)
+                } else if (valueStr.length > 2) {
+                    lengthFactor = 0.7; // 3 chiffres (128, 256, 512)
+                } else if (valueStr.length > 1) {
+                    lengthFactor = 0.85; // 2 chiffres (16, 32, 64)
+                }
+
+                // Calcul final de la taille de police
+                return baseSize * lengthFactor;
     }
 
     color: getTileColor(value)

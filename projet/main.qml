@@ -18,9 +18,10 @@ Window {
     property int cellSpacing: 0.12*cellSize
     property int gridMargin: 10
     // Déclaration de la variable dans l'objet Window
-    property string maincolor: "#FAF8EF"
+    property string maincolor: "#FFE6A7"
     property string mainfont: "Sergoe UI"
     property int taille:5
+
     Item {
         id: keyboardFocus
         focus: true
@@ -73,7 +74,7 @@ Window {
             font.family:mainfont
             font.pixelSize: 40
             font.bold: true
-            color: "#776e65"
+            color: "#6F1D1B"
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.topMargin: 40
@@ -113,14 +114,14 @@ Window {
             contentItem: Text {
                 text: newGameButton.text
                 font: mainfont
-                color: "white"
+                color: "#FFE6A7"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 elide: Text.ElideRight
             }
 
             background: Rectangle {
-                color: "#8f7a66"
+                color: "#6F1D1B"
                 radius: 5
             }
         }
@@ -131,7 +132,7 @@ Window {
             width: 80
             height: 50
             radius: 5
-            color: "#7B1113"
+            color: "#995B2A"
             anchors.right: parent.right
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
@@ -143,7 +144,7 @@ Window {
                 font.family: mainfont
                 font.pixelSize: 13
                 font.bold: true
-                color: "#eee4da"
+                color: "#FFE6A7"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 5
@@ -155,7 +156,7 @@ Window {
                 font.family: mainfont
                 font.pixelSize: 25
                 font.bold: true
-                color: "white"
+                color: "#FFE6A7"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 4
@@ -167,7 +168,7 @@ Window {
             width: 80
             height: 50
             radius: 5
-            color: "#00008B"
+            color: "#432818"
             anchors.right: scoreBox.left
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
@@ -179,7 +180,7 @@ Window {
                 font.family: mainfont
                 font.pixelSize: 13
                 font.bold: true
-                color: "#eee4da"
+                color: "#FFE6A7"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
                 anchors.topMargin: 5
@@ -192,7 +193,7 @@ Window {
                 font.family: mainfont
                 font.pixelSize: 25
                 font.bold: true
-                color: "white"
+                color: "#FFE6A7"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 4
@@ -204,7 +205,7 @@ Window {
         id: gameGridBackground
         width: taille * cellSize + (taille + 1) * cellSpacing
         height: taille * cellSize + (taille + 1) * cellSpacing
-        color: "#bbada0"
+        color: "#BB9457"
         radius: 5
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: header.bottom
@@ -366,12 +367,14 @@ Window {
                         }
 
                         onClicked: {
-                            gameController.newGame();
+                            gameController.newGame(taille);
                             gameOverDialog.close();
                         }
                     }
                 }
             }
+
+
 
     Dialog {
                 id: gameWonDialog
@@ -462,7 +465,7 @@ Window {
         id: controlsArea
         width: parent.width
         height: 100
-        color: "#8f7a66"
+        color: "#BB9457"
         anchors.top: gameGridBackground.bottom
         anchors.topMargin: 10
 
@@ -471,7 +474,7 @@ Window {
             text: "Utilisez les flèches pour déplacer les tuiles. Les tuiles de même valeur fusionnent lorsqu'elles se touchent. Obtenez 2048 pour gagner!"
             font.family: mainfont
             font.pixelSize: 16
-            color: "white"
+            color: "#432818"
             wrapMode: Text.WordWrap
             width: parent.width - 40
             anchors.horizontalCenter: parent.horizontalCenter
@@ -614,6 +617,16 @@ Rectangle {
 
 
 
+MenuButton {
+    id: bouton_difficulte
+    anchors.horizontalCenter: parent.horizontalCenter
+    // Positionner entre bouton_taille et bouton_police
+    anchors.top: bouton_taille.bottom
+    anchors.topMargin: 20
+    buttonText: "Difficulté"
+
+}
+
 }
 
 
@@ -621,13 +634,7 @@ Rectangle {
 
 
 
-
-
-
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
-
-    // La fenêtre qui sera ouverte lorsque le bouton est cliqué
+ // La fenêtre qui sera ouverte lorsque le bouton Couleurs est cliqué
 
 
 Rectangle {
@@ -747,7 +754,7 @@ Rectangle {
 
 
 
-// La fenêtre qui sera ouverte lorsque le bouton est cliqué
+// La fenêtre qui sera ouverte lorsque le bouton Taille est cliqué
 Rectangle {
     id: heightWindow
     anchors.fill: parent
@@ -949,7 +956,7 @@ Rectangle {
 
 
 
-// La fenêtre qui sera ouverte lorsque le bouton est cliqué
+// La fenêtre qui sera ouverte lorsque le bouton Police est cliqué
 
 
 
@@ -1018,4 +1025,174 @@ Rectangle {
             }
         }
 
+
+
+
+// La fenêtre qui sera ouverte pour la difficulté
+Rectangle {
+    id: difficultyWindow
+    anchors.fill: parent
+    visible: false
+    color: maincolor
+
+    Rectangle {
+        width: 300
+        height: 50
+        color: "white"
+        radius: 10
+        border.color: "#cccccc"
+        border.width: 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 50
+
+        Text {
+            text: "Niveau de difficulté"
+            font.family: mainfont
+            font.pixelSize: 20
+            font.bold: true
+            color: "#333"
+            anchors.centerIn: parent
+        }
+    }
+
+    Rectangle {
+        width: 300
+        height: 50
+        color: "white"
+        radius: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 120
+
+        Text {
+            text: "Plus le niveau est élevé, plus vous obtiendrez de tuiles 4"
+            font.family: mainfont
+            font.pixelSize: 16
+            color: "#666"
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            width: parent.width * 0.8
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    Column {
+        width: parent.width * 0.8
+        height: 300
+        spacing: 20
+        anchors.centerIn: parent
+
+        Button {
+            text: "Facile"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            height: 50
+
+            background: Rectangle {
+                color: "#4CAF50"
+                radius: 10
+                border.color: "#388E3C"
+                border.width: 2
+            }
+
+            contentItem: Text {
+                text: "Facile (10% de 4)"
+                font.family: mainfont
+                font.pixelSize: 16
+                color: "white"
+                font.bold: true
+            }
+
+            onClicked: {
+                gameController.setDifficultyLevel(1);
+                console.log("Difficulté réglée sur: Facile");
+            }
+        }
+
+        Button {
+            text: "Moyen"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            height: 50
+
+            background: Rectangle {
+                color: "#FF9800"
+                radius: 10
+                border.color: "#F57C00"
+                border.width: 2
+            }
+
+            contentItem: Text {
+                text: "Moyen (25% de 4)"
+                font.family: mainfont
+                font.pixelSize: 16
+                color: "white"
+                font.bold: true
+            }
+
+            onClicked: {
+                gameController.setDifficultyLevel(2);
+                console.log("Difficulté réglée sur: Moyen");
+            }
+        }
+
+        Button {
+            text: "Difficile"
+            font.family: mainfont
+            font.pixelSize: 18
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 200
+            height: 50
+
+            background: Rectangle {
+                color: "#F44336"
+                radius: 10
+                border.color: "#D32F2F"
+                border.width: 2
+            }
+
+            contentItem: Text {
+                text: "Difficile (40% de 4)"
+                font.family: mainfont
+                font.pixelSize: 16
+                color: "white"
+                font.bold: true
+            }
+
+            onClicked: {
+                gameController.setDifficultyLevel(3);
+                console.log("Difficulté réglée sur: Difficile");
+            }
+        }
+    }
+
+    // Bouton de fermeture
+    Button {
+        text: "X"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 10
+        background: Rectangle {
+            color: "#ff6666"
+            radius: 10
+        }
+        contentItem: Text {
+            text: "X"
+            font.pixelSize: 18
+            color: "white"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: {
+            difficultyWindow.visible = false;
+            menuWindow.visible = true;
+        }
+    }
+}
 }

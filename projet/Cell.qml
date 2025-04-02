@@ -5,5 +5,5 @@ Rectangle {
     width: 80
     height: 80
     radius: 5
-    color: "#cdc1b4"
+    color: "#432818"
 }
