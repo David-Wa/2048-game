@@ -288,41 +288,175 @@ Window {
     }
 
     Dialog {
-        id: gameOverDialog
-        title: "Game Over"
-        standardButtons: Dialog.Ok
-        anchors.centerIn: parent
-        visible: false
-        modal: true
+                id: gameOverDialog
+                title: "Game Over"
+                modal: true
+                anchors.centerIn: parent
+                width: parent.width * 0.8
+                height: parent.height * 0.4
+                closePolicy: Dialog.CloseOnEscape
+                visible: false
 
-        onAccepted: {
-            gameController.newGame();
-            close();
-        }
+                // Style du Dialog
+                background: Rectangle {
+                    color: "#2c3e50"  // Bleu foncé
+                    radius: 10
+                    border.width: 2
+                    border.color: "#34495e"
+                }
 
-        Text {
-            text: "Partie terminée! Votre score: " + gameController.getScore()
-            font.family:mainfont
-        }
-    }
+                // Style du header (titre)
+                header: Rectangle {
+                    color: "#34495e"  // Bleu encore plus foncé
+                    height: 50
+                    radius: 8
+
+                    Text {
+                        text: gameOverDialog.title
+                        color: "#f1c40f"  // Jaune
+                        font.pixelSize: 24
+                        font.bold: true
+                        anchors.centerIn: parent
+                    }
+                }
+
+                // Contenu du Dialog
+                contentItem: Item {
+                    width: parent.width
+                    height: 100
+
+                    Text {
+                        text: "Partie terminée. \n Vous n'avez pas pu atteindre 2048,\n retentez votre chance !"
+                        color: "#ecf0f1"  // Blanc/gris clair
+                        font.pixelSize: 18
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+
+                    }
+                }
+
+                // Style des boutons
+                footer: Rectangle {
+                    color: "transparent"
+                    height: 70
+
+                    Button {
+                        text: "Nouvelle Partie"
+                        anchors.centerIn: parent
+                        width: 180
+                        height: 45
+
+                        contentItem: Text {
+                            text: parent.text
+                            color: "white"
+                            font.pixelSize: 16
+                            font.bold: true
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: parent.down ? "#c0392b" : parent.hovered ? "#e74c3c" : "#d35400"  // Nuances de rouge-orange
+                            radius: 6
+
+                            // Animation sur survol
+                            Behavior on color {
+                                ColorAnimation { duration: 150 }
+                            }
+                        }
+
+                        onClicked: {
+                            gameController.newGame();
+                            gameOverDialog.close();
+                        }
+                    }
+                }
+            }
 
     Dialog {
-        id: gameWonDialog
-        title: "Victoire!"
-        standardButtons: Dialog.Ok
-        anchors.centerIn: parent
-        visible: false
-        modal: true
+                id: gameWonDialog
+                title: "Victoire!"
+                modal: true
+                anchors.centerIn: parent
+                width: parent.width * 0.8
+                height: parent.height * 0.4
+                closePolicy: Dialog.CloseOnEscape
+                visible: false
 
-        onAccepted: {
-            close();
-        }
+                // Style du Dialog
+                background: Rectangle {
+                    color: "#2c3e50"  // Bleu foncé
+                    radius: 10
+                    border.width: 2
+                    border.color: "#27ae60"  // Bordure verte
+                }
 
-        Text {
-            text: "Félicitations! Vous avez atteint 2048!"
-            font.family:mainfont
-        }
-    }
+                // Style du header (titre)
+                header: Rectangle {
+                    color: "#27ae60"  // Vert
+                    height: 50
+                    radius: 8
+
+                    Text {
+                        text: gameWonDialog.title
+                        color: "white"
+                        font.pixelSize: 24
+                        font.bold: true
+                        anchors.centerIn: parent
+                    }
+                }
+
+                // Contenu du Dialog
+                contentItem: Item {
+                    width: parent.width
+                    height: 100
+
+                    Text {
+                        text: "Félicitations! Vous avez atteint 2048! "
+                        color: "#ecf0f1"  // Blanc/gris clair
+                        font.pixelSize: 18
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors.centerIn: parent
+                    }
+                }
+
+                // Style des boutons
+                footer: Rectangle {
+                    color: "transparent"
+                    height: 70
+
+                    Button {
+                        text: "Continuer"
+                        anchors.centerIn: parent
+                        width: 180
+                        height: 45
+
+                        contentItem: Text {
+                            text: parent.text
+                            color: "white"
+                            font.pixelSize: 16
+                            font.bold: true
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        background: Rectangle {
+                            color: parent.down ? "#1e8449" : parent.hovered ? "#2ecc71" : "#27ae60"  // Nuances de vert
+                            radius: 6
+
+                            // Animation sur survol
+                            Behavior on color {
+                                ColorAnimation { duration: 150 }
+                            }
+                        }
+
+                        onClicked: {
+                            gameWonDialog.close();
+                        }
+                    }
+                }
+            }
+
 
     Rectangle {
         id: controlsArea
