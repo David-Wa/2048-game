@@ -6,6 +6,8 @@ Board::Board(QObject* parent)
     , m_size(SIZE)
     , m_changed(false)
     , m_grid(SIZE,SIZE)
+    , m_difficultyLevel(1)
+
 {   m_grid.init();
     initialize(m_size);
 
@@ -53,22 +55,40 @@ void Board::delRandomTile()
 
 
 
-void Board::addRandomTile()
-{
-    QList<Tile*> emptyTiles = getEmptyTiles();
+        void Board::addRandomTile()
+        {
+            QList<Tile*> emptyTiles = getEmptyTiles();
 
-    if (emptyTiles.isEmpty()) return;
+            if (emptyTiles.isEmpty()) return;
 
-    // Choisir une tuile vide aléatoire
-    int index = QRandomGenerator::global()->bounded(emptyTiles.size());
-    Tile* tile = emptyTiles[index];
-    undo.store_random(tile->getRow(),tile->getCol());
-    // 90% de chance d'avoir un 2, 10% de chance d'avoir un 4
-    int value = (QRandomGenerator::global()->bounded(10) < 9) ? 2 : 4;
+            // Choisir une tuile vide aléatoire
+            int index = QRandomGenerator::global()->bounded(emptyTiles.size());
+            Tile* tile = emptyTiles[index];
+            undo.store_random(tile->getRow(),tile->getCol());
 
-    tile->setValue(value);
-    m_changed = true;
-}
+            // Probabilité d'obtenir un 4 selon le niveau de difficulté
+            int fourProbability;
+            switch(m_difficultyLevel) {
+            case 1: // Facile
+                fourProbability = 10; // 10% de chances d'avoir un 4
+                break;
+            case 2: // Moyen
+                fourProbability = 25; // 25% de chances d'avoir un 4
+                break;
+            case 3: // Difficile
+                fourProbability = 40; // 40% de chances d'avoir un 4
+                break;
+            default:
+                fourProbability = 10; // Par défaut (facile)
+            }
+
+            // Générer un 2 ou un 4 selon la probabilité déterminée
+            int value = (QRandomGenerator::global()->bounded(100) < fourProbability) ? 4 : 2;
+
+            tile->setValue(value);
+            m_changed = true;
+        }
+
 
 bool Board::canMove()
 {
@@ -440,6 +460,15 @@ void Board::moveLeft()
         }
     }
 }
+
+
+void Board::setDifficultyLevel(int level)
+{
+    if (level >= 1 && level <= 3) {
+        m_difficultyLevel = level;
+    }
+}
+
 
 bool Board::isFull()
 {

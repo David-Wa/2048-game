@@ -16,6 +16,7 @@ class GameController : public QObject {
     Q_PROPERTY(int bestScore READ getBestScore NOTIFY bestScoreChanged)
     Q_PROPERTY(bool gameOver READ isGameOver NOTIFY gameOverChanged)
     Q_PROPERTY(bool gameWon READ isGameWon NOTIFY gameWonChanged)
+    Q_PROPERTY(int difficultyLevel READ getDifficultyLevel WRITE setDifficultyLevel NOTIFY difficultyLevelChanged)
 
 public:
     explicit GameController(QObject* parent = nullptr);
@@ -33,6 +34,8 @@ public:
     Q_INVOKABLE bool isGameWon();
     Q_INVOKABLE void saveGame();
     Q_INVOKABLE void loadGame();
+    Q_INVOKABLE int getDifficultyLevel() const { return m_difficultyLevel; }
+    Q_INVOKABLE void setDifficultyLevel(int level);
 
 signals:
     void boardModelChanged();
@@ -40,11 +43,13 @@ signals:
     void bestScoreChanged();
     void gameOverChanged();
     void gameWonChanged();
+    void difficultyLevelChanged();
 
 private:
     Game* m_game;
     BoardModel* m_boardModel;
     int m_size;
+    int m_difficultyLevel;
     Undo m_undo;
 };
 

@@ -21,6 +21,7 @@ Window {
     property string maincolor: "#FFE6A7"
     property string mainfont: "Segoe UI"
     property int taille:5
+    property int difficultyLevel: gameController.getDifficultyLevel()
 
     Item {
         id: keyboardFocus
@@ -305,6 +306,11 @@ Window {
             tilesRepeater.model = 0;
             tilesRepeater.model = taille*taille;
         }
+
+        function onDifficultyLevelChanged() {
+                difficultyLevel = gameController.getDifficultyLevel();
+                console.log("QML: Niveau de difficulté mis à jour:", difficultyLevel);
+            }
     }
 
     Dialog {

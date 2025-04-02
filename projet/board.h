@@ -22,6 +22,7 @@ public:
     bool isFull();
     bool contains2048();
     void setSize(int newsize);
+    void setDifficultyLevel(int level);
     Tile* getTileAt(int row, int col) const;
     QList<Tile*> getEmptyTiles() const;
 signals:
@@ -32,6 +33,7 @@ private:
     DamierDyn m_grid;
     int m_size;
     bool m_changed;
+    int m_difficultyLevel;  // 1=facile, 2=moyen, 3=difficile
     Undo undo;
 
     // Méthodes privées pour implémenter les mouvements

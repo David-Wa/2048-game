@@ -10,6 +10,7 @@ GameController::GameController(QObject* parent)
     , m_game(new Game())
     , m_boardModel(new BoardModel(this, m_game->getBoard()))
     , m_size(SIZE)
+    , m_difficultyLevel(1)
 {
     qDebug() << "GameController créé";
 
@@ -38,8 +39,13 @@ BoardModel* GameController::boardModel() const
 void GameController::newGame(int size)
 {
     qDebug() << "GameController::newGame() - Démarrage d'une nouvelle partie";
-    if (m_size!=size){
-        setSize(size);}
+    if (m_size != size) {
+        setSize(size);
+    }
+
+    // Configurer la difficulté
+    m_game->getBoard()->setDifficultyLevel(m_difficultyLevel);
+
     m_game->newGame(size);
     m_boardModel->refresh(size);
 
@@ -143,4 +149,14 @@ void GameController::loadGame()
     emit gameOverChanged();
     emit gameWonChanged();
     emit boardModelChanged();
+}
+
+void GameController::setDifficultyLevel(int level)
+{
+    if (level != m_difficultyLevel && level >= 1 && level <= 3) {
+        m_difficultyLevel = level;
+        m_game->getBoard()->setDifficultyLevel(level);
+        emit difficultyLevelChanged();
+        qDebug() << "Niveau de difficulté changé à:" << level;
+    }
 }
