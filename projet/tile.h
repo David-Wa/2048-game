@@ -4,7 +4,6 @@
 class Tile {
 public:
     Tile();
-
     int getValue() const;
     void setValue(int value);
     int getRow() const;
@@ -13,6 +12,8 @@ public:
     bool isMerged() const;
     void setMerged(bool merged);
     bool isEmpty() const;
+    Tile& operator=(const Tile& A);
+
 
 private:
     int m_value;

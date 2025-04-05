@@ -6,7 +6,7 @@
 #include <QList>
 #include <QObject>
 #include "damierdyn.h"
-#include "undo.h"
+#include <stack>
 
 class Board : public QObject{
     Q_OBJECT
@@ -15,7 +15,6 @@ public:
     ~Board();
     void initialize(int size);
     void addRandomTile();
-    void delRandomTile();
     bool canMove();
     bool moveTiles(Direction direction);
     bool invmoveTiles(Direction direction);
@@ -25,6 +24,9 @@ public:
     void setDifficultyLevel(int level);
     Tile* getTileAt(int row, int col) const;
     QList<Tile*> getEmptyTiles() const;
+    void undo();
+    void reset_undo();
+    void update_undo();
 signals:
     void tileMerged(int value);
 
@@ -34,17 +36,14 @@ private:
     int m_size;
     bool m_changed;
     int m_difficultyLevel;  // 1=facile, 2=moyen, 3=difficile
-    Undo undo;
+    stack<DamierDyn> list_m_grid;
+
 
     // Méthodes privées pour implémenter les mouvements
     void moveUp();
     void moveRight();
     void moveDown();
     void moveLeft();
-    void invmoveUp();
-    void invmoveRight();
-    void invmoveDown();
-    void invmoveLeft();
 };
 
 #endif // BOARD_H

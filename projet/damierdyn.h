@@ -22,6 +22,10 @@ public :
     void init();
     void redim(int a,int b);
     void del(int a,int b);
+    DamierDyn& operator=(const DamierDyn &A);
+    void Free();
+    void Alloc(int l, int c);
+    DamierDyn(const DamierDyn& other);
 } ;
 
 

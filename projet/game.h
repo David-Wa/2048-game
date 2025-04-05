@@ -3,6 +3,9 @@
 
 #include "direction.h"
 #include <QObject>
+#include <stack>
+
+using namespace std;
 
 // Déclaration anticipée
 class Board;
@@ -21,6 +24,8 @@ public:
     bool isGameWon() const;
     void saveGame();
     void loadGame();
+    void undo();
+    void reset_undo();
 
     // Accesseur pour le plateau
     Board* getBoard() const;
@@ -40,6 +45,7 @@ private:
     bool m_gameOver;
     bool m_gameWon;
     int m_size;
+    stack<int> list_score;
 };
 
 #endif // GAME_H

@@ -19,8 +19,8 @@ qt_add_qml_module(appProjet
     RESOURCES
         couleurs.jpg
     SOURCES
-        undo.h
-        undo.cpp
+
+
         damierdyn.h
         damierdyn.cpp
         menubutton.h

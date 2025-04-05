@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "direction.h"
-#include "undo.h"
+
 
 // Déclarations anticipées
 class Game;
@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void loadGame();
     Q_INVOKABLE int getDifficultyLevel() const { return m_difficultyLevel; }
     Q_INVOKABLE void setDifficultyLevel(int level);
+    Q_INVOKABLE void undo();
 
 signals:
     void boardModelChanged();
@@ -50,7 +51,6 @@ private:
     BoardModel* m_boardModel;
     int m_size;
     int m_difficultyLevel;
-    Undo m_undo;
 };
 
 #endif // GAMECONTROLLER_H

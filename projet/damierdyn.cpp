@@ -10,6 +10,22 @@ DamierDyn::DamierDyn(int a,int b) {
     {tab[i]= new Tile*[b];}
 }
 
+DamierDyn::DamierDyn(const DamierDyn& other) {
+    nb_lignes = other.nb_lignes;
+    nb_colonnes = other.nb_colonnes;
+
+    // Allouer un nouveau tableau
+    tab = new Tile**[nb_lignes];
+    for(int i = 0; i < nb_lignes; i++) {
+        tab[i] = new Tile*[nb_colonnes];
+        for(int j = 0; j < nb_colonnes; j++) {
+            tab[i][j] = new Tile();
+            // Copier les valeurs
+            *(tab[i][j]) = *(other.get(i, j));
+        }
+    }
+}
+
 void DamierDyn::init() {
     int i,j;
     for (i=0;i<nb_lignes;i++)
@@ -17,6 +33,18 @@ void DamierDyn::init() {
         for (j=0;j<nb_colonnes;j++)
         {
             tab[i][j]=new Tile();      }
+    }
+}
+
+
+void DamierDyn::print()
+{
+    int i,j;
+    for (i=0;i<nb_lignes;i++)
+    {
+        for(j=0;j<nb_colonnes;j++){
+            cout<<tab[i][j]->getValue()<<endl;
+        }
     }
 }
 
@@ -51,7 +79,65 @@ DamierDyn::~DamierDyn() {delete[] tab;}
 
 
 
+void DamierDyn::Alloc(int l, int c){
+    nb_lignes = l;
+    nb_colonnes = c;
+    tab = new Tile**[nb_lignes];
+    for(int i=0; i<nb_lignes; i++){
+        tab[i] = new Tile*[nb_colonnes];}
+    init();
+}
 
+void DamierDyn::Free() {
+    if (tab != NULL) {
+        for (int i = 0; i < nb_lignes; i++) {
+            for (int j=0;j<nb_colonnes;j++){
+                delete[] tab[i][j];
+            }
+            delete[] tab[i]; // libère la colonne
+        }
+        delete[] tab; // libère le tableau principal
+        tab = NULL;
+    }
+}
+
+DamierDyn& DamierDyn::operator=(const DamierDyn& A) {
+    if (this != &A) {
+        // Vérifier si les dimensions sont différentes
+        if (nb_lignes != A.nb_lignes || nb_colonnes != A.nb_colonnes) {
+            // Libérer la mémoire existante
+            for (int i = 0; i < nb_lignes; ++i) {
+                for (int j = 0; j < nb_colonnes; ++j) {
+                    delete tab[i][j];
+                }
+                delete[] tab[i];
+            }
+            delete[] tab;
+
+            // Redimensionner
+            nb_lignes = A.nb_lignes;
+            nb_colonnes = A.nb_colonnes;
+
+            // Réallouer
+            tab = new Tile**[nb_lignes];
+            for (int i = 0; i < nb_lignes; ++i) {
+                tab[i] = new Tile*[nb_colonnes];
+                for (int j = 0; j < nb_colonnes; ++j) {
+                    tab[i][j] = new Tile();
+                }
+            }
+        }
+
+        // Faire une copie profonde des objets Tile
+        for (int i = 0; i < nb_lignes; ++i) {
+            for (int j = 0; j < nb_colonnes; ++j) {
+                // Utiliser l'opérateur = de la classe Tile pour copier les valeurs
+                *(tab[i][j]) = *(A.get(i, j));
+            }
+        }
+    }
+    return *this;
+}
 
 void DamierDyn::del(int a, int b) {
     // Vérifier si l'élément à l'indice donné est valide

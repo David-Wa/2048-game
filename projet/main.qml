@@ -114,6 +114,45 @@ Window {
 
         }
 
+
+
+
+
+        Button{
+            id:undoButton
+            font.family:mainfont
+            anchors.top: scoreBox.top
+            anchors.left: gameTitle.right
+            anchors.leftMargin: 28
+            anchors.topMargin: 40
+            width: 120
+            height: 40
+            onClicked:{
+            gameController.undo()}
+
+            contentItem: Text {
+                text: "<-"
+                font {
+                        family: mainfont
+                        pixelSize: 18
+                        bold: true  // optionnel
+                    }
+                color: "black"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle {
+                color: "#BB9457"
+                radius: 5
+            }
+
+        }
+
+
+
+
+
         Button {
             id: newGameButton
             text: "Nouvelle partie"

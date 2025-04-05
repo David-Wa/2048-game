@@ -48,3 +48,5 @@ bool Tile::isEmpty() const
 {
     return m_value == 0;
 }
+
+

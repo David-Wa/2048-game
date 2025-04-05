@@ -3,7 +3,7 @@
 #include "boardmodel.h"
 #include "board.h"
 #include <QDebug>
-#include "undo.h"
+
 
 GameController::GameController(QObject* parent)
     : QObject(parent)
@@ -48,7 +48,6 @@ void GameController::newGame(int size)
 
     m_game->newGame(size);
     m_boardModel->refresh(size);
-
     emit scoreChanged();
     emit bestScoreChanged();
     emit gameOverChanged();
@@ -69,7 +68,6 @@ void GameController::newGame(int size)
 void GameController::move(int direction)
 {
     qDebug() << "GameController::move() - Direction:" << direction;
-    m_undo.store(direction);
     // Convertir l'entier en Direction enum
     Direction dir;
     switch (direction) {
@@ -159,4 +157,18 @@ void GameController::setDifficultyLevel(int level)
         emit difficultyLevelChanged();
         qDebug() << "Niveau de difficulté changé à:" << level;
     }
+}
+
+
+void GameController::undo()
+{
+    // Revenir en arrière
+    m_game->undo();
+
+    // Mettre à jour le modèle
+    m_boardModel->refresh(m_size);
+
+    // Notifier les changements
+    emit scoreChanged();
+    emit boardModelChanged();
 }
