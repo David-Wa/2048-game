@@ -119,19 +119,20 @@ Window {
 
 
         Button{
-            id:undoButton
-            font.family:mainfont
-            anchors.top: scoreBox.top
-            anchors.left: gameTitle.right
-            anchors.leftMargin: 28
-            anchors.topMargin: 40
-            width: 120
-            height: 40
+            id: undoButton
+                font.family: mainfont
+                width: 80
+                height: 40
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: 3
+                anchors.top: bestScoreBox.bottom
+                anchors.topMargin: 10
+
             onClicked:{
             gameController.undo()}
 
             contentItem: Text {
-                text: "<-"
+                text: "Undo <-"
                 font {
                         family: mainfont
                         pixelSize: 18

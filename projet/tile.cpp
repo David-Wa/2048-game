@@ -8,6 +8,16 @@ Tile::Tile()
 {
 }
 
+Tile& Tile::operator=(const Tile& A) {
+    if (this != &A) {
+        m_value = A.m_value;
+        m_row = A.m_row;
+        m_col = A.m_col;
+        m_merged = A.m_merged;
+    }
+    return *this;
+}
+
 int Tile::getValue() const
 {
     return m_value;
@@ -48,5 +58,6 @@ bool Tile::isEmpty() const
 {
     return m_value == 0;
 }
+
 
 
