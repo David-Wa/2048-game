@@ -16,7 +16,7 @@ Window {
     // Dimensions de la grille et des tuiles
     property int cellSize: 0.7*width/taille
     property int cellSpacing: 0.12*cellSize
-    property int gridMargin: 10
+    property int gridMargin: 40/taille
     // Déclaration de la variable dans l'objet Window
     property string maincolor: "#FFE6A7"
     property string mainfont: "Segoe UI"
@@ -124,7 +124,7 @@ Window {
             anchors.top: scoreBox.top
             anchors.left: gameTitle.right
             anchors.leftMargin: 28
-            anchors.topMargin: 40
+            anchors.topMargin: 45
             width: 120
             height: 40
             onClicked:{
@@ -132,6 +132,39 @@ Window {
 
             contentItem: Text {
                 text: "<-"
+                font {
+                        family: mainfont
+                        pixelSize: 18
+                        bold: true  // optionnel
+                    }
+                color: "black"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+            background: Rectangle {
+                color: "#BB9457"
+                radius: 5
+            }
+
+        }
+
+
+
+        Button{
+            id:redoButton
+            font.family:mainfont
+            anchors.top: scoreBox.top
+            anchors.left: gameTitle.right
+            anchors.leftMargin: 28
+            anchors.topMargin: 90
+            width: 120
+            height: 40
+            onClicked:{
+            gameController.redo()}
+
+            contentItem: Text {
+                text: "->"
                 font {
                         family: mainfont
                         pixelSize: 18

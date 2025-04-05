@@ -172,3 +172,17 @@ void GameController::undo()
     emit scoreChanged();
     emit boardModelChanged();
 }
+
+
+void GameController::redo()
+{
+    // Revenir en arrière
+    m_game->redo();
+
+    // Mettre à jour le modèle
+    m_boardModel->refresh(m_size);
+
+    // Notifier les changements
+    emit scoreChanged();
+    emit boardModelChanged();
+}

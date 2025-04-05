@@ -25,7 +25,9 @@ public:
     Tile* getTileAt(int row, int col) const;
     QList<Tile*> getEmptyTiles() const;
     void undo();
+    void redo();
     void reset_undo();
+    void reset_redo();
     void update_undo();
 signals:
     void tileMerged(int value);
@@ -37,7 +39,7 @@ private:
     bool m_changed;
     int m_difficultyLevel;  // 1=facile, 2=moyen, 3=difficile
     stack<DamierDyn> list_m_grid;
-
+    stack<DamierDyn> m_grid_redo;
 
     // Méthodes privées pour implémenter les mouvements
     void moveUp();

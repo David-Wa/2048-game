@@ -35,7 +35,6 @@ void Board::update_undo()
     // Créer une copie profonde de m_grid
     DamierDyn gridCopy = m_grid;  // Utilise le constructeur de copie
     list_m_grid.push(gridCopy);
-    list_m_grid.top().print();
 }
 
 
@@ -50,6 +49,7 @@ void Board::initialize(int size)
         }
     }
     reset_undo();
+    reset_redo();
     m_changed = false;
 }
 
@@ -340,12 +340,9 @@ void Board::undo()
         // Assurons-nous que top() est valide avant d'y accéder
         DamierDyn topGrid = list_m_grid.top();
         list_m_grid.pop();
-
+        m_grid_redo.push(topGrid);
         // Copier l'état précédent du jeu
         m_grid = list_m_grid.top();
-
-        // Maintenant, nous pouvons afficher en toute sécurité
-        list_m_grid.top().print();
     }
 }
 
@@ -354,3 +351,21 @@ void Board::reset_undo()
         list_m_grid.pop();
 }
 }
+
+void Board::redo()
+    {
+        if(m_grid_redo.size() > 1){
+            // Assurons-nous que top() est valide avant d'y accéder
+            DamierDyn topGrid = m_grid_redo.top();
+            m_grid_redo.pop();
+            list_m_grid.push(topGrid);
+            // Copier l'état précédent du jeu
+            m_grid = m_grid_redo.top();
+        }
+}
+
+void Board::reset_redo(){
+    { while(!m_grid_redo.empty()){
+            m_grid_redo.pop();
+        }
+    }}

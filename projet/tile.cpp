@@ -50,3 +50,11 @@ bool Tile::isEmpty() const
 }
 
 
+Tile& Tile::operator=(const Tile& A)
+{
+    m_value=A.m_value;
+    m_row=A.m_row;
+    m_col=A.m_col;
+    m_merged=A.m_merged;
+    return *this;
+}

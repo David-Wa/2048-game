@@ -42,7 +42,9 @@ void Game::newGame(int size)
         setSize(size);}
     m_board->initialize(m_size);
     m_score = 0;
-    list_score.push(m_score);
+    undo_score_empty();
+    redo_score_empty();
+    list_score_undo.push(m_score);
     m_gameOver = false;
     m_gameWon = false;
 
@@ -67,7 +69,9 @@ void Game::move(Direction direction)
         // Ajouter une nouvelle tuile aléatoire
         m_board->addRandomTile();
         m_board->update_undo();
-        list_score.push(m_score);
+        m_board->reset_redo();
+        list_score_undo.push(m_score);
+        redo_score_empty();
         // Vérifier l'état du jeu
         if (m_board->contains2048()) {
             m_gameWon = true;
@@ -84,6 +88,12 @@ void Game::move(Direction direction)
 }
 
 
+void Game::redo_score_empty(){
+    while(!list_score_redo.empty())
+    {list_score_redo.pop();}
+}
+
+void Game::undo_score_empty(){while(!list_score_undo.empty()){list_score_undo.pop();}}
 
 int Game::getScore() const
 {
@@ -178,12 +188,17 @@ void Game::loadGame()
 void Game::undo()
 {
     m_board->undo();
-    if (list_score.size()>1)
-    list_score.pop();
-    m_score=list_score.top();
+    if (list_score_undo.size()>1)
+    {list_score_redo.push(m_score);
+    list_score_undo.pop();
+        m_score=list_score_undo.top();}
 }
 
 
-void Game::reset_undo(){
-    m_board->reset_undo();
+void Game::redo(){
+    m_board->redo();
+    if (list_score_redo.size()>1)
+    {     list_score_undo.push(m_score);
+        list_score_redo.pop();
+        m_score=list_score_redo.top();}
 }

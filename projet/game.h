@@ -25,7 +25,7 @@ public:
     void saveGame();
     void loadGame();
     void undo();
-    void reset_undo();
+    void redo();
 
     // Accesseur pour le plateau
     Board* getBoard() const;
@@ -45,7 +45,10 @@ private:
     bool m_gameOver;
     bool m_gameWon;
     int m_size;
-    stack<int> list_score;
+    stack<int> list_score_undo;
+    stack<int> list_score_redo;
+    void redo_score_empty();
+    void undo_score_empty();
 };
 
 #endif // GAME_H

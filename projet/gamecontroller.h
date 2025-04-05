@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE int getDifficultyLevel() const { return m_difficultyLevel; }
     Q_INVOKABLE void setDifficultyLevel(int level);
     Q_INVOKABLE void undo();
+    Q_INVOKABLE void redo();
 
 signals:
     void boardModelChanged();
