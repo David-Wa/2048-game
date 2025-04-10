@@ -5,7 +5,7 @@
 - *David Wagner* david.wagner@etu.ec-lyon.fr
 
 ## Description
-Ce projet est une réplique du jeu 2048 développée en *C++* avec *Qt* et *QML*. L'objectif est de reproduire fidèlement le gameplay du jeu original, sans la publicité, et avec des fonctionnalités supplémentaires pour améliorer l'expérience utilisateur. Une vidéo tuto intitulée "2048 tuto" est disponible dans le dossier du projet.
+Ce projet est une réplique du jeu 2048 développée en *C++* avec *Qt* et *QML*. L'objectif est de reproduire fidèlement le gameplay du jeu original, sans la publicité, et avec des fonctionnalités supplémentaires pour améliorer l'expérience utilisateur. Une vidéo tuto intitulée "2048 tuto" ainsi que des captures d'écran du jeu sont disponibles dans le dossier "Démo" du répo Git.
 
 ## Règles du jeu
 Le jeu se joue exclusivement avec les *4 flèches directionnelles* :
@@ -21,9 +21,10 @@ Le but est d'obtenir une tesselle avec la valeur *2048* (ou plus) avant que la g
 - Interface graphique intuitive avec QML
 - Possibilité de choisir la taille de la grille (4x4, 5x5, 6x6, 7x7, 8x8)
 - Système d'annulation (Undo)
-- Personnalisation des couleurs et des polices
+- Personnalisation des couleurs (en cliquant sur le pixel d'une photo) et des polices
 - Niveaux de difficulté ajustables (facile, moyen, difficile) modifiant la probabilité d'obtenir des tuiles de valeur 4
 - Sauvegarde du meilleur score
+
 
 
 ## Structures de données principales
@@ -124,10 +125,14 @@ Normalise les types de mouvements dans le code
 - *Framework* : Qt 
 - *Interface* : QML pour l'affichage
 
+
 ## Compilation et exécution
 ### Prérequis
 - *Qt Creator* installé avec Qt 6
 - *Compilateur C++* compatible (GCC, Clang, MSVC...)
+
+
+
 
 ### Instructions
 1. Cloner le dépôt du projet :
@@ -137,8 +142,6 @@ Normalise les types de mouvements dans le code
    
 2. Ouvrir le projet dans *Qt Creator*.
 3. Compiler et exécuter depuis l'IDE 
-
-
 
 
 
