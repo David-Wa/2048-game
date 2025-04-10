@@ -128,7 +128,8 @@ Window {
             width: 120
             height: 40
             onClicked:{
-            gameController.undo()}
+            gameController.undo();
+             keyboardFocus.forceActiveFocus();}
 
             contentItem: Text {
                 text: "<-"
@@ -161,7 +162,8 @@ Window {
             width: 120
             height: 40
             onClicked:{
-            gameController.redo()}
+            gameController.redo();
+             keyboardFocus.forceActiveFocus();}
 
             contentItem: Text {
                 text: "->"
@@ -201,6 +203,7 @@ Window {
             onClicked: {
                 console.log("Bouton nouvelle partie cliqué");
                 gameController.newGame(taille);
+                 keyboardFocus.forceActiveFocus();
             }
 
             contentItem: Text {
