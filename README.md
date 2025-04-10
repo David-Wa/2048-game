@@ -138,10 +138,9 @@ Normalise les types de mouvements dans le code
 1. Cloner le dépôt du projet :
    
    git clone https://gitlab.ec-lyon.fr/atber/2048-c.git
-   cd 2048-c
    
-2. Ouvrir le projet dans *Qt Creator*.
-3. Compiler et exécuter depuis l'IDE 
+2. Ouvrir le dossier "projet" dans *Qt Creator*.
+3. Compiler et exécuter 
 
 
 
