@@ -37,16 +37,6 @@ void DamierDyn::init() {
 }
 
 
-void DamierDyn::print()
-{
-    int i,j;
-    for (i=0;i<nb_lignes;i++)
-    {
-        for(j=0;j<nb_colonnes;j++){
-            cout<<tab[i][j]->getValue()<<endl;
-        }
-    }
-}
 
 
 Tile* DamierDyn::get(int a,int b) const
@@ -101,43 +91,6 @@ void DamierDyn::Free() {
     }
 }
 
-DamierDyn& DamierDyn::operator=(const DamierDyn& A) {
-    if (this != &A) {
-        // Vérifier si les dimensions sont différentes
-        if (nb_lignes != A.nb_lignes || nb_colonnes != A.nb_colonnes) {
-            // Libérer la mémoire existante
-            for (int i = 0; i < nb_lignes; ++i) {
-                for (int j = 0; j < nb_colonnes; ++j) {
-                    delete tab[i][j];
-                }
-                delete[] tab[i];
-            }
-            delete[] tab;
-
-            // Redimensionner
-            nb_lignes = A.nb_lignes;
-            nb_colonnes = A.nb_colonnes;
-
-            // Réallouer
-            tab = new Tile**[nb_lignes];
-            for (int i = 0; i < nb_lignes; ++i) {
-                tab[i] = new Tile*[nb_colonnes];
-                for (int j = 0; j < nb_colonnes; ++j) {
-                    tab[i][j] = new Tile();
-                }
-            }
-        }
-
-        // Faire une copie profonde des objets Tile
-        for (int i = 0; i < nb_lignes; ++i) {
-            for (int j = 0; j < nb_colonnes; ++j) {
-                // Utiliser l'opérateur = de la classe Tile pour copier les valeurs
-                *(tab[i][j]) = *(A.get(i, j));
-            }
-        }
-    }
-    return *this;
-}
 
 void DamierDyn::del(int a, int b) {
     // Vérifier si l'élément à l'indice donné est valide

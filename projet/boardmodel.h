@@ -40,7 +40,6 @@ public:
 
 private:
     Board* m_board;
-    //Tile* m_grid[SIZE][SIZE];
     DamierDyn m_grid;
     int m_size;
     bool m_changed;

@@ -152,7 +152,7 @@ Window {
 
 
 
-        Button{
+     /*   Button{
             id:redoButton
             font.family:mainfont
             anchors.top: scoreBox.top
@@ -182,7 +182,7 @@ Window {
                 radius: 5
             }
 
-        }
+        }*/
 
 
 

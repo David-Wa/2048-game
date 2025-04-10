@@ -33,7 +33,6 @@ signals:
     void tileMerged(int value);
 
 private:
-   // Tile* m_grid[SIZE][SIZE];
     DamierDyn m_grid;
     int m_size;
     bool m_changed;
