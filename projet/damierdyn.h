@@ -24,6 +24,7 @@ public :
     void Free();
     void Alloc(int l, int c);
     DamierDyn(const DamierDyn& other);
+    DamierDyn& operator=(const DamierDyn& other);
 } ;
 
 

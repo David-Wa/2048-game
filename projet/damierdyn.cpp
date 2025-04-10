@@ -26,6 +26,35 @@ DamierDyn::DamierDyn(const DamierDyn& other) {
     }
 }
 
+DamierDyn& DamierDyn::operator=(const DamierDyn& other) {
+    if (this != &other) {  // Éviter l'auto-assignation
+        // Libérer la mémoire existante
+        for (int i = 0; i < nb_lignes; i++) {
+            for (int j = 0; j < nb_colonnes; j++) {
+                delete tab[i][j];
+            }
+            delete[] tab[i];
+        }
+        delete[] tab;
+
+        // Copier les dimensions
+        nb_lignes = other.nb_lignes;
+        nb_colonnes = other.nb_colonnes;
+
+        // Allouer un nouveau tableau
+        tab = new Tile**[nb_lignes];
+        for (int i = 0; i < nb_lignes; i++) {
+            tab[i] = new Tile*[nb_colonnes];
+            for (int j = 0; j < nb_colonnes; j++) {
+                tab[i][j] = new Tile();
+                // Copier les valeurs
+                *(tab[i][j]) = *(other.get(i, j));
+            }
+        }
+    }
+    return *this;
+}
+
 void DamierDyn::init() {
     int i,j;
     for (i=0;i<nb_lignes;i++)

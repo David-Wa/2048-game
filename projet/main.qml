@@ -132,11 +132,11 @@ Window {
              keyboardFocus.forceActiveFocus();}
 
             contentItem: Text {
-                text: "<-"
+                text: "Undo <-"
                 font {
                         family: mainfont
                         pixelSize: 18
-                        bold: true  // optionnel
+                        bold: true
                     }
                 color: "black"
                 horizontalAlignment: Text.AlignHCenter
@@ -149,41 +149,6 @@ Window {
             }
 
         }
-
-
-
-     /*   Button{
-            id:redoButton
-            font.family:mainfont
-            anchors.top: scoreBox.top
-            anchors.left: gameTitle.right
-            anchors.leftMargin: 28
-            anchors.topMargin: 90
-            width: 120
-            height: 40
-            onClicked:{
-            gameController.redo();
-             keyboardFocus.forceActiveFocus();}
-
-            contentItem: Text {
-                text: "->"
-                font {
-                        family: mainfont
-                        pixelSize: 18
-                        bold: true  // optionnel
-                    }
-                color: "black"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                elide: Text.ElideRight
-            }
-            background: Rectangle {
-                color: "#BB9457"
-                radius: 5
-            }
-
-        }*/
-
 
 
 

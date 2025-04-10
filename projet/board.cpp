@@ -55,40 +55,40 @@ void Board::initialize(int size)
 
 
 
-        void Board::addRandomTile()
-        {
-            QList<Tile*> emptyTiles = getEmptyTiles();
+void Board::addRandomTile()
+{
+    QList<Tile*> emptyTiles = getEmptyTiles();
 
-            if (emptyTiles.isEmpty()) return;
+    if (emptyTiles.isEmpty()) return;
 
-            // Choisir une tuile vide aléatoire
-            int index = QRandomGenerator::global()->bounded(emptyTiles.size());
-            Tile* tile = emptyTiles[index];
+    // Choisir une tuile vide aléatoire
+    int index = QRandomGenerator::global()->bounded(emptyTiles.size());
+    Tile* tile = emptyTiles[index];
 
-            // Probabilité d'obtenir un 4 selon le niveau de difficulté
-            int fourProbability;
-            switch(m_difficultyLevel) {
-            case 1: // Facile
-                fourProbability = 10; // 10% de chances d'avoir un 4
-                break;
-            case 2: // Moyen
-                fourProbability = 25; // 25% de chances d'avoir un 4
-                break;
-            case 3: // Difficile
-                fourProbability = 40; // 40% de chances d'avoir un 4
-                break;
-            default:
-                fourProbability = 10; // Par défaut (facile)
-            }
+    // Probabilité d'obtenir un 4 selon le niveau de difficulté
+    int fourProbability;
+    switch(m_difficultyLevel) {
+    case 1: // Facile
+        fourProbability = 10; // 10% de chances d'avoir un 4
+        break;
+    case 2: // Moyen
+        fourProbability = 25; // 25% de chances d'avoir un 4
+        break;
+    case 3: // Difficile
+        fourProbability = 40; // 40% de chances d'avoir un 4
+        break;
+    default:
+        fourProbability = 10; // Par défaut (facile)
+    }
 
-            // Générer un 2 ou un 4 selon la probabilité déterminée
-            int value = (QRandomGenerator::global()->bounded(100) < fourProbability) ? 4 : 2;
+    // Générer un 2 ou un 4 selon la probabilité déterminée
+    int value = (QRandomGenerator::global()->bounded(100) < fourProbability) ? 4 : 2;
 
-            tile->setValue(value);
+    tile->setValue(value);
 
-            //stocker la grille pour un retour arrière
-            m_changed = true;
-        }
+    //stocker la grille pour un retour arrière
+    m_changed = true;
+}
 
 
 bool Board::canMove()

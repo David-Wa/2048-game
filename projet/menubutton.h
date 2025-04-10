@@ -17,7 +17,7 @@ private:
     QString buttonName="bouton";
 signals:
     void nameChanged();
-     void openMenu();
+    void openMenu();
 };
 
 #endif // MENUBUTTON_H

@@ -165,7 +165,6 @@ void Game::loadGame()
     m_score = settings.value("score", 0).toInt();
     m_bestScore = settings.value("bestScore", 0).toInt();
 
-    // Charger l'état du plateau
     // Réinitialiser d'abord le plateau
     m_board->initialize(m_size);
 

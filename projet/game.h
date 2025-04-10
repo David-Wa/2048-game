@@ -33,9 +33,7 @@ public:
 public slots:
     // Méthode pour incrémenter le score
     void addScore(int points);
-
-    // Méthode pour mettre à jour le score en fonction de l'état du plateau
-    //void updateScore();
+    // Méthode pour modifier la taille de la grille
     void setSize(int newsize);
 
 private:

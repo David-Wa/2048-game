@@ -5,7 +5,7 @@
 - *David Wagner* david.wagner@etu.ec-lyon.fr
 
 ## Description
-Ce projet est une réplique du jeu 2048 développée en *C++* avec *Qt* et *QML*. L'objectif est de reproduire fidèlement le gameplay du jeu original, sans la publicité, et avec des fonctionnalités supplémentaires pour améliorer l'expérience utilisateur.
+Ce projet est une réplique du jeu 2048 développée en *C++* avec *Qt* et *QML*. L'objectif est de reproduire fidèlement le gameplay du jeu original, sans la publicité, et avec des fonctionnalités supplémentaires pour améliorer l'expérience utilisateur. Une vidéo tuto intitulée "2048 tuto" est disponible dans le dossier du projet.
 
 ## Règles du jeu
 Le jeu se joue exclusivement avec les *4 flèches directionnelles* :
@@ -28,7 +28,7 @@ Le but est d'obtenir une tesselle avec la valeur *2048* (ou plus) avant que la g
 
 ## Structures de données principales
 
-DamierDyn :
+• DamierDyn :
 
 Structure fondamentale qui gère un tableau dynamique 3D de pointeurs de Tile (Tile***)
 Implémente une matrice redimensionnable avec allocation/désallocation dynamique
@@ -48,17 +48,16 @@ Utilisé dans Game pour stocker l'historique des scores
 Synchronisé avec les états du plateau pour assurer la cohérence lors des undo/redo
 
 
+## Rôle de chaque classe
 
-Rôle de chaque classe
-
-Tile :
+• Tile :
 
 Encapsule les données d'une tuile individuelle: valeur, position (row, col), état de fusion
 Fournit des accesseurs et mutateurs pour modifier l'état
 Inclut un opérateur d'affectation pour copier les propriétés entre tuiles
 
 
-Board :
+• Board :
 
 Contient la grille de jeu (DamierDyn m_grid)
 Gère tous les mouvements de tuiles (moveUp, moveDown, moveLeft, moveRight)
@@ -67,7 +66,7 @@ Ajoute des tuiles aléatoires avec la probabilité basée sur le niveau de diffi
 Gère l'historique des états du plateau pour undo/redo
 
 
-BoardModel :
+• BoardModel :
 
 Adapte le modèle de données pour l'interface QML (hérite de QAbstractListModel)
 Définit les rôles utilisés par QML pour accéder aux données (ValueRole, RowRole, ColRole)
@@ -75,7 +74,7 @@ Convertit la structure de grille 2D en liste 1D pour l'utilisation dans les vues
 Implémente les méthodes requises par QAbstractListModel (rowCount, data, roleNames)
 
 
-Game :
+• Game :
 
 Coordonne la logique générale du jeu et maintient l'état global
 Gère le score actuel et le meilleur score, ainsi que leur historique
@@ -84,7 +83,7 @@ Contrôle le niveau de difficulté
 Implémente la sauvegarde/chargement de l'état du jeu via QSettings
 
 
-GameController :
+• GameController :
 
 Fait le pont entre l'interface utilisateur QML et la logique C++
 Expose les propriétés et méthodes du jeu à QML via Q_PROPERTY et Q_INVOKABLE
@@ -92,19 +91,19 @@ Traduit les entrées utilisateur en actions dans le modèle
 Émet des signaux pour notifier l'interface des changements d'état
 
 
-ColorPicker :
+• ColorPicker :
 
 Classe utilitaire pour la personnalisation
 Extrait la couleur d'un pixel dans une image pour la personnalisation
 
 
-Bouton (MenuButton) :
+• Bouton (MenuButton) :
 
 Composant d'interface personnalisé
 Gère les interactions avec les boutons du menu
 
 
-Direction (enum) :
+• Direction (enum) :
 
 Définit les constantes pour les directions de mouvement (UP, RIGHT, DOWN, LEFT)
 Normalise les types de mouvements dans le code
@@ -112,12 +111,12 @@ Normalise les types de mouvements dans le code
 
 
 ## Difficultés rencontrées
-- 
-- 
-- 
 - Le passage d'une grille (tableau) dont la taille est définie statiquement à la grille comme instance de DamierDyn. Cela aurait pu être mieux anticipé ce qui aurait facilité l'implémentation de la fonctionnalité de changement de taille de la grille.
-- Réussir à faire en sorte que QML trouve le chemin des ressources, en particulier la photo pour l'option de changement de couleur, grâce au dossier build.
+- Réussir à faire en sorte que QML trouve le chemin pour exécuter les ressources (qui était différent du chemin d'existence), en particulier la photo pour l'option de changement de couleur, grâce au dossier build.
 - La fonctionnalité undo : penser à implémenter le constructeur de recopie de DamierDyn et surcharger l'opérateur = de Tile.
+- Sauvegarde du meilleur score dans QSettings
+- En général, l'utilisation de nouvelles bibliothèques QML a nécessité une documentation extérieure pour mieux les comprendre (QList, QImage, QDebug, QSettings, etc)
+
 
 
 ## Technologies utilisées
@@ -139,12 +138,17 @@ Normalise les types de mouvements dans le code
 2. Ouvrir le projet dans *Qt Creator*.
 3. Compiler et exécuter depuis l'IDE 
 
+
+
+
+
 ## Auteurs et crédits
 Projet réalisé dans le cadre de l'électif C++ "Programmation des interfaces graphiques en C++", deuxième année du cursus ingénieur généraliste de Centrale Lyon.
 
 Développé par :
 - *Anas Tber*   anas.tber@etu.ec-lyon.fr
-- *David Wagner* david.wagner@etu.ec-lyon.fr
+- *David Wagner*  david.wagner@etu.ec-lyon.fr
 
-gitlab.ec-lyon.fr
-Écrire à Anas Tber
+
+
+
