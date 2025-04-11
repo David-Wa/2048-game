@@ -116,7 +116,7 @@ Normalise les types de mouvements dans le code
 - Réussir à faire en sorte que QML trouve le chemin pour exécuter les ressources (qui était différent du chemin d'existence), en particulier la photo pour l'option de changement de couleur, grâce au dossier build.
 - La fonctionnalité undo : penser à implémenter le constructeur de recopie de DamierDyn et surcharger l'opérateur = de Tile.
 - Sauvegarde du meilleur score dans QSettings
-- En général, l'utilisation de nouvelles bibliothèques QML a nécessité une documentation extérieure pour mieux les comprendre (QList, QImage, QDebug, QSettings, etc)
+- En général, l'utilisation de nouvelles bibliothèques QT a nécessité une documentation extérieure pour mieux les comprendre (QList, QImage, QDebug, QSettings, etc)
 
 
 
