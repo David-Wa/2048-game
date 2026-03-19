@@ -1,156 +1,119 @@
-# Projet 2048 en C++ avec Qt et QML
+# 2048 Project in C++ with Qt and QML
 
-## Auteurs
-- *Anas Tber*: anas.tber@etu.ec-lyon.fr
-- *David Wagner* david.wagner@etu.ec-lyon.fr
+## Authors
+- **Anas Tber**: anas.tber@etu.ec-lyon.fr
+- **David Wagner**: david.wagner@etu.ec-lyon.fr
 
 ## Description
-Ce projet est une réplique du jeu 2048 développée en *C++* avec *Qt* et *QML*. L'objectif est de reproduire fidèlement le gameplay du jeu original, sans la publicité, et avec des fonctionnalités supplémentaires pour améliorer l'expérience utilisateur. Une vidéo tuto intitulée "2048 tuto" ainsi que des captures d'écran du jeu sont disponibles dans le dossier "Démo" du répo Git.
+This project is a replica of the 2048 game developed in **C++** with **Qt** and **QML**. The goal is to faithfully reproduce the gameplay of the original game, without ads, and with additional features to enhance the user experience. A tutorial video titled "2048 tuto" as well as screenshots of the game are available in the "Démo" folder of the Git repository.
 
-## Règles du jeu
-Le jeu se joue exclusivement avec les *4 flèches directionnelles* :
-- Appuyer sur une flèche déplace toutes les tesselles dans la direction choisie.
-- Deux tesselles de même valeur fusionnent lorsqu'elles se rencontrent, formant une nouvelle tesselle avec la somme de leurs valeurs (ex: 2+2=4, 4+4=8, etc.).
-- Une nouvelle tesselle apparaît aléatoirement sur une case vide après chaque déplacement (valeur 2 dans la plupart des cas, parfois 4).
-- La partie se termine lorsque la grille est pleine et qu'aucun mouvement ne permet de fusionner ou de libérer une case.
+## Game Rules
+The game is played exclusively with the **4 directional arrow keys**:
+- Pressing an arrow key moves all tiles in the chosen direction.
+- Two tiles of the same value merge when they meet, forming a new tile with the sum of their values (e.g. 2+2=4, 4+4=8, etc.).
+- A new tile appears randomly on an empty cell after each move (value 2 in most cases, sometimes 4).
+- The game ends when the grid is full and no move can merge tiles or free up a cell.
 
-Le but est d'obtenir une tesselle avec la valeur *2048* (ou plus) avant que la grille ne soit bloquée.
+The goal is to obtain a tile with the value **2048** (or more) before the grid becomes stuck.
 
-## Fonctionnalités implémentées: 
-- Jeu de base 2048 avec fusion de tuiles et apparition aléatoire de nouvelles tuiles
-- Interface graphique intuitive avec QML
-- Possibilité de choisir la taille de la grille (4x4, 5x5, 6x6, 7x7, 8x8)
-- Système d'annulation (Undo)
-- Personnalisation des couleurs (en cliquant sur le pixel d'une photo) et des polices
-- Niveaux de difficulté ajustables (facile, moyen, difficile) modifiant la probabilité d'obtenir des tuiles de valeur 4
-- Sauvegarde du meilleur score
+## Implemented Features
+- Basic 2048 game with tile merging and random appearance of new tiles
+- Intuitive graphical interface with QML
+- Ability to choose grid size (4×4, 5×5, 6×6, 7×7, 8×8)
+- Undo system
+- Color customization (by clicking on a pixel in a photo) and font customization
+- Adjustable difficulty levels (easy, medium, hard) affecting the probability of obtaining tiles with value 4
+- Best score saving
 
+## Main Data Structures
 
+**DamierDyn:**
+- Core structure managing a dynamic 3D array of Tile pointers (Tile***)
+- Implements a resizable matrix with dynamic allocation/deallocation
+- Includes a copy constructor and assignment operator for state management
+- Enables tile manipulation via get, set, redim, and del methods
 
-## Structures de données principales
+**stack\<DamierDyn\>:**
+- Used to store the board state history
+- Implements undo/redo functionality by keeping track of changes
 
-• DamierDyn :
+**stack\<int\>:**
+- Used in Game to store score history
+- Synchronized with board states to ensure consistency during undo/redo
 
-Structure fondamentale qui gère un tableau dynamique 3D de pointeurs de Tile (Tile***)
-Implémente une matrice redimensionnable avec allocation/désallocation dynamique
-Inclut un constructeur de copie et un opérateur d'affectation pour la gestion d'états
-Permet la manipulation des tuiles via des méthodes get, set, redim et del
+## Role of Each Class
 
+**Tile:**
+- Encapsulates individual tile data: value, position (row, col), merge state
+- Provides getters and setters to modify state
+- Includes an assignment operator to copy properties between tiles
 
-stack<DamierDyn> :
+**Board:**
+- Contains the game grid (DamierDyn m_grid)
+- Handles all tile movements (moveUp, moveDown, moveLeft, moveRight)
+- Implements tile merging logic and detection of possible moves
+- Adds random tiles with probability based on difficulty level
+- Manages board state history for undo/redo
 
-Utilisé pour stocker l'historique des états du plateau
-Implémente les fonctionnalités undo/redo en gardant trace des modifications
+**BoardModel:**
+- Adapts the data model for the QML interface (inherits from QAbstractListModel)
+- Defines roles used by QML to access data (ValueRole, RowRole, ColRole)
+- Converts the 2D grid structure into a 1D list for use in QML views
+- Implements methods required by QAbstractListModel (rowCount, data, roleNames)
 
+**Game:**
+- Coordinates the overall game logic and maintains global state
+- Manages the current score and best score, as well as their history
+- Detects win/loss conditions
+- Controls the difficulty level
+- Implements game state saving/loading via QSettings
 
-stack<int> :
+**GameController:**
+- Acts as a bridge between the QML user interface and the C++ logic
+- Exposes game properties and methods to QML via Q_PROPERTY and Q_INVOKABLE
+- Translates user inputs into actions in the model
+- Emits signals to notify the interface of state changes
 
-Utilisé dans Game pour stocker l'historique des scores
-Synchronisé avec les états du plateau pour assurer la cohérence lors des undo/redo
+**ColorPicker:**
+- Utility class for customization
+- Extracts the color of a pixel in an image for personalization
 
+**Button (MenuButton):**
+- Custom interface component
+- Handles menu button interactions
 
-## Rôle de chaque classe
+**Direction (enum):**
+- Defines constants for movement directions (UP, RIGHT, DOWN, LEFT)
+- Standardizes movement types throughout the code
 
-• Tile :
+## Challenges Encountered
+- Transitioning from a statically sized grid (array) to a grid as a DamierDyn instance. This could have been better anticipated, which would have made implementing the grid size change feature easier.
+- Getting QML to find the path to execute resources (which differed from the actual file path), in particular the photo for the color change option, through the build folder.
+- The undo feature: remembering to implement the copy constructor for DamierDyn and to overload the = operator for Tile.
+- Saving the best score in QSettings.
+- In general, using new Qt libraries required additional documentation to better understand them (QList, QImage, QDebug, QSettings, etc.)
 
-Encapsule les données d'une tuile individuelle: valeur, position (row, col), état de fusion
-Fournit des accesseurs et mutateurs pour modifier l'état
-Inclut un opérateur d'affectation pour copier les propriétés entre tuiles
+## Technologies Used
+- **Language**: C++
+- **Framework**: Qt
+- **Interface**: QML for display
 
-
-• Board :
-
-Contient la grille de jeu (DamierDyn m_grid)
-Gère tous les mouvements de tuiles (moveUp, moveDown, moveLeft, moveRight)
-Implémente la logique de fusion des tuiles et détection des mouvements possibles
-Ajoute des tuiles aléatoires avec la probabilité basée sur le niveau de difficulté
-Gère l'historique des états du plateau pour undo/redo
-
-
-• BoardModel :
-
-Adapte le modèle de données pour l'interface QML (hérite de QAbstractListModel)
-Définit les rôles utilisés par QML pour accéder aux données (ValueRole, RowRole, ColRole)
-Convertit la structure de grille 2D en liste 1D pour l'utilisation dans les vues QML
-Implémente les méthodes requises par QAbstractListModel (rowCount, data, roleNames)
-
-
-• Game :
-
-Coordonne la logique générale du jeu et maintient l'état global
-Gère le score actuel et le meilleur score, ainsi que leur historique
-Détecte les conditions de victoire/défaite
-Contrôle le niveau de difficulté
-Implémente la sauvegarde/chargement de l'état du jeu via QSettings
-
-
-• GameController :
-
-Fait le pont entre l'interface utilisateur QML et la logique C++
-Expose les propriétés et méthodes du jeu à QML via Q_PROPERTY et Q_INVOKABLE
-Traduit les entrées utilisateur en actions dans le modèle
-Émet des signaux pour notifier l'interface des changements d'état
-
-
-• ColorPicker :
-
-Classe utilitaire pour la personnalisation
-Extrait la couleur d'un pixel dans une image pour la personnalisation
-
-
-• Bouton (MenuButton) :
-
-Composant d'interface personnalisé
-Gère les interactions avec les boutons du menu
-
-
-• Direction (enum) :
-
-Définit les constantes pour les directions de mouvement (UP, RIGHT, DOWN, LEFT)
-Normalise les types de mouvements dans le code
-
-
-
-## Difficultés rencontrées
-- Le passage d'une grille (tableau) dont la taille est définie statiquement à la grille comme instance de DamierDyn. Cela aurait pu être mieux anticipé ce qui aurait facilité l'implémentation de la fonctionnalité de changement de taille de la grille.
-- Réussir à faire en sorte que QML trouve le chemin pour exécuter les ressources (qui était différent du chemin d'existence), en particulier la photo pour l'option de changement de couleur, grâce au dossier build.
-- La fonctionnalité undo : penser à implémenter le constructeur de recopie de DamierDyn et surcharger l'opérateur = de Tile.
-- Sauvegarde du meilleur score dans QSettings
-- En général, l'utilisation de nouvelles bibliothèques QT a nécessité une documentation extérieure pour mieux les comprendre (QList, QImage, QDebug, QSettings, etc)
-
-
-
-## Technologies utilisées
-- *Langage* : C++
-- *Framework* : Qt 
-- *Interface* : QML pour l'affichage
-
-
-## Compilation et exécution
-### Prérequis
-- *Qt Creator* installé avec Qt 6
-- *Compilateur C++* compatible (GCC, Clang, MSVC...)
-
-
-
+## Compilation and Execution
+### Prerequisites
+- **Qt Creator** installed with Qt 6
+- A compatible **C++ compiler** (GCC, Clang, MSVC...)
 
 ### Instructions
-1. Cloner le dépôt du projet :
-   
+1. Clone the project repository:
+```
    git clone https://gitlab.ec-lyon.fr/atber/2048-c.git
-   
-2. Ouvrir le dossier "projet" dans *Qt Creator*.
-3. Compiler et exécuter 
+```
+2. Open the "projet" folder in **Qt Creator**.
+3. Compile and run.
 
+## Authors and Credits
+Project carried out as part of the C++ elective course *"Graphical Interface Programming in C++"*, second year of the general engineering curriculum at Centrale Lyon.
 
-
-## Auteurs et crédits
-Projet réalisé dans le cadre de l'électif C++ "Programmation des interfaces graphiques en C++", deuxième année du cursus ingénieur généraliste de Centrale Lyon.
-
-Développé par :
-- *Anas Tber*   anas.tber@etu.ec-lyon.fr
-- *David Wagner*  david.wagner@etu.ec-lyon.fr
-
-
-
-
+Developed by:
+- **Anas Tber** — anas.tber@etu.ec-lyon.fr
+- **David Wagner** — david.wagner@etu.ec-lyon.fr
